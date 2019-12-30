@@ -1,0 +1,135 @@
+<div class="row">
+    <div class="col-md-6">
+        <h1>Section</h1>
+    </div>
+
+    <div class="col-md-6 text-right">
+        <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Add new Section</span></button>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-daterange form-inline pull-right" id="destination">
+                <button class="btn btn-outline-primary"><span class="text">Reset</span>
+                    <i class="fa fa-refresh"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive tab-pane active" role="tabpanel" id="home" style="overflow: auto; padding-top: 2px;">
+        <table id="example" id="example" class="table table-hover dataTable dtr-inline">
+            <thead>
+                <tr>
+                    <th>S# </th>
+                    <th>Section Code</th>
+                    <th>Section Name</th>
+                    <th>Action</th>
+                    <!-- <th class="not-export-col">Actions</th> -->
+                </tr>
+            </thead>
+            <tbody class="FontSizeTable">
+                <tr class="odd" role="row" *ngFor="let section of allSection; let i = index;">
+                    <td>{{i + 1}}</td>
+                    <td>{{section.SectionCode}}</td>
+                    <td>{{section.SectionName}}</td>
+                    <td>
+                        <ng-container matColumnDef="actions">
+                            <mat-cell>
+                                <button mat-icon-button color="primary" matTooltip="Edit Section"
+                                    (click)="editRecord(section.SectionID)">
+                                    <mat-icon>create</mat-icon>
+                                </button>
+                                <button mat-icon-button color="warn" matTooltip="Delete Section" type="button"
+                                    (click)="deleteRecord(section.SectionID)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                                <button mat-icon-button matTooltip="View Section"
+                                    (click)="ViewRecord(section.SectionID)">
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+                    </td>
+                    <!-- <td>
+                <a class=" btn btn-link btn-sm " title="Delete" [id]="user.id" (click)="$event.stopPropagation();modal.ShowModal(user.id)">
+                  <i class="fa fa-trash-o">
+                  </i>
+                </a>
+                <a class="btn btn-link btn-sm" title="Edit" (click)="editUser(i, user)">
+                  <i class="fa fa-pencil-square-o "></i>
+                </a>
+              </td> -->
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th> </th>
+                    <th></th>
+                    <th></th>
+                    <!-- <th></th>
+              <th></th>
+              <th></th> -->
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+    <!-- Add new Section Modal -->
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+        (nzOnCancel)="handleCancel()">
+
+        <ng-template #modalTitle>
+            Add new Section
+        </ng-template>
+        <ng-template #modalContent>
+            <form autocomplete="off" [formGroup]="addSectionForm">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <div class="form-group">
+                            <label>Section Code</label>
+                            <input class="form-control" formControlName="sectionId" type="number" min="0"
+                                placeholder="eg: 676" [ngClass]="{ 'is-invalid': submitted && f.sectionId.errors }">
+
+                            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                <div *ngIf="f.sectionId.errors.required">Section ID is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="form-group">
+                            <label>Section Name</label>
+                            <input class="form-control" formControlName="name" type="text" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                <div *ngIf="f.name.errors.required">Section name is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+        <ng-template #modalFooter>
+            <div class="col-lg-12 text-right">
+                <div class="btn-group mr-2">
+                    <button class="btn btn-success" (click)="onSave()">
+                        <i class="fa fa-save"></i>
+                        <span class="text">Save</span>
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary mr-2" (click)="onReset()">
+                        <i class="fa fa-refresh"></i>
+                        <span class="text">Reset</span>
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </nz-modal>
