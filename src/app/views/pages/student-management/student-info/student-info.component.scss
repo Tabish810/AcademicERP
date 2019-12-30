@@ -1,0 +1,26 @@
+.datepicker{
+    width: 180px !important;
+
+
+}
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+.error_info{
+  color: red;
+}
+
+.example-headers-align input, select, textarea{
+  color: #000000 !important;
+}
+

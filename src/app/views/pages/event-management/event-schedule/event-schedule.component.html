@@ -1,0 +1,160 @@
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <h1>Event Schedule</h1>
+        <nz-time-picker matInput [(ngModel)]="time1"></nz-time-picker>
+    </div>
+
+    <div class="col-md-6 text-right">
+        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span>Add Event Schedule</span></button>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-lg-12">
+        <div class="input-daterange form-inline pull-right" id="destination">
+            <button class="btn btn-outline-primary"><span class="text">Reset</span>
+                <i class="fa fa-refresh"></i></button>
+        </div>
+    </div>
+</div>
+<div class="table-responsive tab-pane active" role="tabpanel" id="home" style="overflow: auto; padding-top: 2px;">
+    <table id="example" id="example" class="table table-hover dataTable dtr-inline">
+        <thead>
+            <tr>
+                <th>S# </th>
+                <th>Event Code</th>
+                <th>Date From</th>
+                <th>Date To</th>
+                <th>Time From</th>
+                <th>Time To</th>
+                <th>Location</th>
+                <th>Organizaed By</th>
+                <th>Award No</th>
+                <th>Event Incharge</th>
+                <th>Description</th>
+                <th>Action</th>
+                <!-- <th class="not-export-col">Actions</th> -->
+            </tr>
+        </thead>
+        <tbody class="FontSizeTable">
+            <tr class="odd" role="row" *ngFor="let eventSchedule of allEventSchedule; let i = index;">
+                <td>{{i + 1}}</td>
+                <td>{{eventSchedule.EventNo}}</td>
+                <td>{{eventSchedule.DateFrom | date}}</td>
+                <td>{{eventSchedule.DateTo | date}}</td>
+                <td>{{eventSchedule.TimeFrom }}</td>
+                <td>{{eventSchedule.TimeTo }}</td>
+                <td>{{eventSchedule.Location}}</td>
+                <td>{{eventSchedule.OrganizaedBy}}</td>
+                <td>{{eventSchedule.AwardNo}}</td>
+                <td>{{eventSchedule.EventIncharge}}</td>
+                <td>{{eventSchedule.Description}}</td>
+
+                <th>
+                    <ng-container matColumnDef="actions">
+                        <mat-cell>
+                            <button mat-icon-button color="primary" matTooltip="Edit Event Schedule"
+                                (click)="editRecord(eventSchedule.EventScheduleID)">
+                                <mat-icon>create</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" matTooltip="Delete Event Schedule" type="button"
+                                (click)="deleteRecord(eventSchedule.EventScheduleID)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <button mat-icon-button matTooltip="View Event Schedule"
+                                (click)="viewRecord(eventSchedule.EventScheduleID)">
+                                <mat-icon>remove_red_eye</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+                </th>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+<!-- Add new Institute -->
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="handleCancel()">
+
+    <ng-template #modalTitle>
+        Event Schedule
+    </ng-template>
+    <ng-template #modalContent>
+        <form [formGroup]="addEventScheduleForm">
+            <mat-form-field>
+                <input formControlName="EventNo" matInput placeholder="Event Code">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput formControlName="DateFrom" [matDatepicker]="DateFrom" placeholder="Date From">
+                <mat-datepicker-toggle matSuffix [for]="DateFrom"></mat-datepicker-toggle>
+                <mat-datepicker #DateFrom></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput formControlName="DateTo" [matDatepicker]="DateTo" placeholder="Date to">
+                <mat-datepicker-toggle matSuffix [for]="DateTo"></mat-datepicker-toggle>
+                <mat-datepicker #DateTo></mat-datepicker>
+            </mat-form-field>
+            <div>
+                <mat-label>Time From</mat-label>
+                <nz-time-picker matInput formControlName="TimeFrom" [(ngModel)]="time1" nzFormat="HH:mm:ss">
+                </nz-time-picker>
+            </div>
+            <div>
+                <mat-label>Time To</mat-label>
+                <nz-time-picker matInput formControlName="TimeTo" [(ngModel)]="time2" nzFormat="HH:mm:ss">
+                </nz-time-picker>
+            </div>
+            <mat-form-field>
+                <input formControlName="Location" matInput placeholder="Book id">
+            </mat-form-field>
+            <mat-form-field>
+                <input formControlName="OrganizaedBy" matInput placeholder="Organizaed By">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input formControlName="AwardNo" matInput placeholder="Award Code">
+            </mat-form-field>
+            <mat-form-field>
+                <input formControlName="EventIncharge" matInput placeholder="Event Incharge">
+            </mat-form-field>
+            <mat-form-field>
+                <textarea matInput formControlName="Description" placeholder="Description"></textarea>
+            </mat-form-field>
+
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="col-lg-12 text-right">
+            <div class="btn-group mr-2">
+                <button [disabled]="!addEventScheduleForm.valid" class="btn btn-success" (click)="onSave()">
+                    <i class="fa fa-save"></i>
+                    <span class="text">Save</span>
+                </button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary mr-2" (click)="onReset()">
+                    <i class="fa fa-refresh"></i>
+                    <span class="text">Reset</span>
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</nz-modal>

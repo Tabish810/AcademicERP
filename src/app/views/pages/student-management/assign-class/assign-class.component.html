@@ -1,0 +1,32 @@
+<mat-card>
+    <mat-card-title>Assign Class</mat-card-title>
+    <form>
+        <mat-card-content>
+            <div class="tp-container">
+                <form [formGroup]="assignclassForm">
+                    <mat-form-field>
+                        <input matInput placeholder="Student Registration No">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-select formControlName="ClassID" placeholder="Select Class">
+                            <mat-option [value]="class.ClassID" *ngFor="let class of allClasses">{{class.ClassName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-select formControlName="SectionID" value="'null'" placeholder="Select Section">
+                            <mat-option [value]="sec.SectionID" *ngFor="let sec of allSection">{{sec.SectionName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </form>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-flat-button color="primary">Submit</button>
+        </mat-card-actions>
+    </form>
+    <mat-card-footer>
+
+    </mat-card-footer>
+</mat-card>
