@@ -981,7 +981,7 @@ export class MenuConfig {
 					]
 				},
 				{
-					title: 'Home Work Management',
+					title: 'Home Work',
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon2-list-2',

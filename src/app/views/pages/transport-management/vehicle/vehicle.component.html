@@ -7,11 +7,11 @@
         <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span>Add new Vehicle</span></button>
     </div>
 </div>
-<div class="row mb-3">
+<div class="row mb-3 btn-ops-bg">
     <div class="col-lg-12">
         <div class="input-daterange form-inline pull-right" id="destination">
-            <button class="btn btn-outline-primary"><span class="text">Reset</span>
-                <i class="fa fa-refresh"></i></button>
+            <!-- <button class="btn btn-outline-primary"><span class="text">Reset</span>
+                <i class="fa fa-refresh"></i></button> -->
         </div>
     </div>
 </div>
@@ -26,9 +26,8 @@
                 <th>Model</th>
                 <th>Driver Name</th>
                 <th>Contact No</th>
-                <th>DriverLicenceno</th>
+                <th>Driver Licence No</th>
                 <th>Action</th>
-                <!-- <th class="not-export-col">Actions</th> -->
             </tr>
         </thead>
         <tbody class="FontSizeTable">
@@ -36,10 +35,10 @@
                 <td>{{i + 1}}</td>
                 <td>{{vehicle.VehicleName}}</td>
                 <td>{{vehicle.NoPlate}}</td>
+                <td>{{vehicle.Model}}</td>
+                <td>{{vehicle.DriverName}}</td>
                 <td>{{vehicle.DriverContactNo}}</td>
                 <td>{{vehicle.DriverLicenceno}}</td>
-                <td>{{vehicle.Description}}</td>
-
                 <th>
                     <ng-container matColumnDef="actions">
                         <mat-cell>
@@ -110,7 +109,7 @@
                 <input formControlName="DriverLicenceno" matInput placeholder="Fax No">
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <textarea matInput formControlName="Description" placeholder="Address"></textarea>
+                <textarea matInput formControlName="Description" placeholder="Description"></textarea>
             </mat-form-field>
         </form>
     </ng-template>
