@@ -69,7 +69,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				setTimeout(() => {
 					document.body.classList.add('kt-page--loaded');
 					this.loader = false;
-				}, 1000);
+				}, 250);
 			}
 		});
 		this.unsubscribe.push(routerSubscription);
