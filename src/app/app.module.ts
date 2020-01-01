@@ -1,5 +1,3 @@
-
-
 registerLocaleData(en);// Angular
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
@@ -21,6 +19,10 @@ import 'hammerjs';
 // NGX Permissions
 import { NgxPermissionsModule } from 'ngx-permissions';
 // NGRX
+
+//LOADER
+import { NgxSpinnerModule } from "ngx-spinner";
+
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -47,7 +49,7 @@ import {
 	MenuHorizontalService,
 	PageConfigService,
 	SplashScreenService,
-	SubheaderService
+	SubheaderService,
 } from './core/_base/layout';
 // Auth
 import { AuthModule } from './views/pages/auth/auth.module';
@@ -67,7 +69,6 @@ import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { HttpServiceService } from './services/common/http-service.service';
-
 
 // tslint:disable-next-line:class-name
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -102,6 +103,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
+		NgxSpinnerModule,
 		environment.isMockEnabled ? HttpClientInMemoryWebApiModule.forRoot(FakeApiService, {
 			passThruUnknownUrl: true,
 			dataEncapsulation: false

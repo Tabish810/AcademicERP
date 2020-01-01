@@ -6,7 +6,6 @@ import { BaseComponent } from './views/theme/base/base.component';
 import { ErrorPageComponent } from './views/theme/content/error-page/error-page.component';
 // Auth
 import { AuthGuard } from './core/auth';
-
 const routes: Routes = [
 	{ path: 'auth', loadChildren: () => import('./views/pages/auth/auth.module').then(m => m.AuthModule) },
 

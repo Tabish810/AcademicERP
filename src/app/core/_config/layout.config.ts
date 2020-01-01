@@ -10,10 +10,10 @@ export class LayoutConfig {
 				'background-image': './assets/media/misc/bg-1.jpg',
 			},
 			logo: {
-				dark: './assets/media/logos/logo-light.png',
+				dark: './assets/media/logos/mindecole-logo.png',
 				light: './assets/media/logos/logo-dark.png',
-				brand: './assets/media/logos/logo-light.png',
-				green: './assets/media/logos/logo-light.png',
+				brand: './assets/media/logos/mindecole-logo.png',
+				green: './assets/media/logos/mindecole-logo.png',
 			},
 		},
 		// == Page Splash Screen loading
