@@ -222,11 +222,11 @@ export class CityComponent implements OnInit {
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
     $('div.dt-buttons span').addClass('text');
 
-        // Buttons
-        $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right","10px");
-        $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right","10px");;
-        $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right","10px");;
-        $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right","10px");;
+    // Buttons
+    $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right", "10px");
+    $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right", "10px");;
 
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');

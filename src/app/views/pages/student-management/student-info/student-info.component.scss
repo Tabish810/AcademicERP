@@ -1,3 +1,4 @@
+@import "sass/pages/wizard/wizard-4";
 .datepicker{
     width: 180px !important;
 
@@ -23,4 +24,7 @@ mat-form-field {
 .example-headers-align input, select, textarea{
   color: #000000 !important;
 }
-
+mat-expansion-panel{
+  margin-bottom: 1.5em;
+  box-shadow: 0px 0px 5px dimgray;
+}
