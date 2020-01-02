@@ -8,6 +8,7 @@ import { ParentInfoComponent } from './parent-info/parent-info.component';
 import { StudentContactInfoComponent } from './student-contact-info/student-contact-info.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import {PartialsModule} from '../../partials/partials.module';
 const routes: Routes = [
   {
     path: '',
@@ -46,6 +47,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
+    PartialsModule,
     RouterModule.forChild(routes),
   ],
   providers: [NgxImageCompressService],

@@ -1,4 +1,9 @@
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import {
+  Component, OnInit,
+  Inject, ChangeDetectorRef,
+  AfterViewInit, ElementRef,
+  ViewChild
+} from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ApiServiceService } from '../../../../services/common/api-service.service';
@@ -17,12 +22,12 @@ export class StudentInfoComponent implements OnInit {
   allStudent;
   student;
   error_info = 'A';
-
+  @ViewChild('wizard', {static: true}) el: ElementRef;
   panel1 = false;
   panel2 = false;
   panel3 = false;
   panel4 = false;
-
+  filePath: any = "No Image";
   base64textString;
   fileData: File = null;
   previewUrl: any = null;
@@ -277,6 +282,8 @@ export class StudentInfoComponent implements OnInit {
 
   selectFile(event: any) {
     var fileName: any;
+    this.filePath = (event.target.value);
+    console.log(event.target.value);
     this.file = event.target.files[0];
     fileName = this.file['name'];
     if (event.target.files && event.target.files[0]) {
@@ -296,6 +303,7 @@ export class StudentInfoComponent implements OnInit {
       result => {
         this.imgResultAfterCompress = result;
         this.localCompressedURl = result;
+
         this.sizeOFCompressedImage = this.imageCompress.byteCount(result) / (1024 * 1024)
         console.warn('Size in bytes after compression:', this.sizeOFCompressedImage);
         // create file from byte
@@ -369,7 +377,7 @@ export class StudentInfoComponent implements OnInit {
   }
 
   onSubmit() {
-
+    this.submitted = true;
     // this.http.post('url/to/your/api', formData)
     //   .subscribe(res => {
     //     console.log(res);
@@ -440,5 +448,36 @@ export class StudentInfoComponent implements OnInit {
   //   })
   //   console.log("hey")
   // }
+
+
+
+
+
+
+  // WIZARD Starts Here
+
+
+  ngAfterViewInit(): void {
+		// Initialize form wizard
+		const wizard = new KTWizard(this.el.nativeElement, {
+			startStep: 1
+		});
+
+		// Validation before going to next page
+		wizard.on('beforeNext', (wizardObj) => {
+			// https://angular.io/guide/forms
+			// https://angular.io/guide/form-validation
+
+			// validate the form and use below function to stop the wizard's step
+			// wizardObj.stop();
+		});
+
+		// Change event
+		wizard.on('change', (wizard) => {
+			setTimeout(() => {
+				KTUtil.scrollTop();
+			}, 500);
+		});
+  }
 
 }
