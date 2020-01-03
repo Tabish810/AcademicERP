@@ -603,10 +603,10 @@ export class MenuConfig {
 		},
 		aside: {
 			self: {},
-			
-				/*
-				Side Bar Starts from here
-				*/
+
+			/*
+			Side Bar Starts from here
+			*/
 			items: [
 				{
 					title: 'Dashboard',
@@ -902,7 +902,7 @@ export class MenuConfig {
 					title: 'User Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-user-outline-symbol',
+					icon: 'flaticon2-user-1',
 					submenu: [
 						{
 							title: 'Users',
@@ -963,7 +963,7 @@ export class MenuConfig {
 					title: 'Student Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon2-user',
 					submenu: [
 						{
 							title: 'Student Information',
@@ -984,7 +984,7 @@ export class MenuConfig {
 					title: 'Home Work',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon2-sheet',
 					submenu: [
 						{
 							title: 'Home Work',
@@ -1002,7 +1002,7 @@ export class MenuConfig {
 					title: 'Exam Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon2-copy',
 					submenu: [
 						{
 							title: 'Exam Setup',
@@ -1026,7 +1026,7 @@ export class MenuConfig {
 					title: 'Accounts Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon-line-graph',
 					submenu: [
 						{
 							title: 'Submit Fees',
@@ -1050,7 +1050,7 @@ export class MenuConfig {
 					title: 'HR Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon-user-settings',
 					submenu: [
 						{
 							title: 'Department',
@@ -1063,12 +1063,12 @@ export class MenuConfig {
 							page: '/hr_management/employee'
 						}
 					]
-				}, 
+				},
 				{
 					title: 'Attendance Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon2-group',
 					submenu: [
 						{
 							title: 'Student Attendance',
@@ -1083,7 +1083,7 @@ export class MenuConfig {
 					title: 'Library Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon-book',
 					submenu: [
 						{
 							title: 'Book Entry',
@@ -1104,7 +1104,7 @@ export class MenuConfig {
 					title: 'Transport Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon2-lorry',
 					submenu: [
 						{
 							title: 'Vehicle',
@@ -1122,7 +1122,7 @@ export class MenuConfig {
 					title: 'Hostel Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon-home-1',
 					submenu: [
 						{
 							title: 'Hostels',
@@ -1140,7 +1140,7 @@ export class MenuConfig {
 					title: 'Event Management',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon-time-3',
 					submenu: [
 						{
 							title: 'Event Info',
@@ -1158,17 +1158,17 @@ export class MenuConfig {
 					title: 'Report',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon-interface-4',
 					submenu: [
 						{
-							title: 'Student Report',
-							page: '/event_management/event_info'
+							title: 'Report 1',
+							page: '/report1/report'
 						}, {
 							title: 'Report 2',
-							page: '/event_management/event_schedule'
+							page: '/report2/report'
 						}, {
 							title: 'Report 3',
-							page: '/event_management/event_awards'
+							page: 'report3/report3'
 						}
 					]
 				},
@@ -1176,17 +1176,17 @@ export class MenuConfig {
 					title: 'Advance Search',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon-search',
 					submenu: [
 						{
-							title: 'Event Info',
-							page: '/event_management/event_info'
+							title: 'Student Search',
+							page: '/advance_search/student'
 						}, {
-							title: 'Event Schedule',
-							page: '/event_management/event_schedule'
+							title: 'Search2',
+							page: '/advance_search/teacher_search'
 						}, {
-							title: 'Event Awards',
-							page: '/event_management/event_awards'
+							title: 'Search 3',
+							page: '/advance_search/any_search'
 						}
 					]
 				},
@@ -1194,7 +1194,7 @@ export class MenuConfig {
 				Side Bar ends here
 				*/
 
-				
+
 				// { section: 'Custom' },
 				// {
 				// 	title: 'Error Pages',
