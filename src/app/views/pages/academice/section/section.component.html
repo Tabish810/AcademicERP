@@ -4,7 +4,8 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
+        <button nz-button [nzType]="'primary'" (click)="showModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+                New</span></button>
     </div>
 
     <div class="row btn-ops-bg">
@@ -92,7 +93,7 @@
             <form autocomplete="off" [formGroup]="addSectionForm">
                 <div class="row">
                     <div class="col-lg-4 col-md-4">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Section Code</label>
                             <input class="form-control" formControlName="sectionId" type="number" min="0"
                                 placeholder="eg: 676" [ngClass]="{ 'is-invalid': submitted && f.sectionId.errors }">
@@ -100,17 +101,32 @@
                             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                 <div *ngIf="f.sectionId.errors.required">Section ID is required</div>
                             </div>
+                        </div> -->
+                        <mat-form-field class="example-full-width">
+                            <input matInput min="0" [ngClass]="{ 'is-invalid': submitted && f.sectionId.errors }"
+                                formControlName="sectionId" type="text" placeholder="Section ID">
+                        </mat-form-field>
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.sectionId.errors.required">Section ID is required</div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4">
-                        <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput min="0" [ngClass]="{ 'is-invalid': submitted && f.sectionId.errors }"
+                                formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                                type="text" placeholder="Section Name">
+                        </mat-form-field>
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Section name is required</div>
+                        </div>
+                        <!-- <div class="form-group">
                             <label>Section Name</label>
                             <input class="form-control" formControlName="name" type="text" class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
                             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                 <div *ngIf="f.name.errors.required">Section name is required</div>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
@@ -119,7 +135,7 @@
         <ng-template #modalFooter>
             <div class="col-lg-12 text-right">
                 <div class="btn-group mr-2">
-                    <button class="btn btn-success" (click)="onSave()">
+                    <button class="btn btn-success" [disabled]="addSectionForm.invalid" (click)="onSave()">
                         <i class="fa fa-save"></i>
                         <span class="text">Save</span>
                     </button>

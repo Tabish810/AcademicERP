@@ -4,7 +4,8 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
+        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i
+                    class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
     </div>
 </div>
 <div class="row mb-3 btn-ops-bg">
@@ -92,43 +93,72 @@
     <ng-template #modalContent>
         <form [formGroup]="addBookForm">
             <!-- <mat-select [(value)]="selected"></mat-select> -->
-            <mat-form-field>
-                <input formControlName="BookCode" matInput placeholder="Book Code">
-            </mat-form-field>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="BookCode" matInput placeholder="Book Code">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="Name" type="text" placeholder="Book Name">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="IsbnNP" matInput placeholder="ISBN No">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="Publisher" type="text" placeholder="Publisher">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="Author" matInput placeholder="Author">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Select Subject</mat-label>
+                        <mat-select formControlName="SubjectNo">
+                            <mat-option value="option1">Option 1</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="RackNo" matInput placeholder="Rack No">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="Qty" type="number" placeholder="Quantity">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput [matDatepicker]="picker1" placeholder="Date" formControlName="Date">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="Description" type="text" placeholder="Book Description">
+                    </mat-form-field>
+                </div>
+            </div>
 
-            <mat-form-field>
-                <input matInput formControlName="Name" type="text" placeholder="Book Name">
-            </mat-form-field>
-            <mat-form-field>
-                <input formControlName="IsbnNP" matInput placeholder="ISBN No">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput formControlName="Publisher" type="text" placeholder="Publisher">
-            </mat-form-field>
-
-            <mat-form-field>
-                <input formControlName="Author" matInput placeholder="Author">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Select Subject</mat-label>
-                <mat-select formControlName="SubjectNo">
-                    <mat-option value="option1">Option 1</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <input formControlName="RackNo" matInput placeholder="Rack No">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput formControlName="Qty" type="number" placeholder="Quantity">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput [matDatepicker]="picker1" placeholder="Date" formControlName="Date">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput formControlName="Description" type="text" placeholder="Book Description">
-            </mat-form-field>
         </form>
     </ng-template>
     <ng-template #modalFooter>
