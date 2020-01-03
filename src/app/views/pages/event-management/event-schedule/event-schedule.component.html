@@ -5,7 +5,8 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
+        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i
+                    class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
     </div>
 </div>
 <div class="row mb-3 btn-ops-bg">
@@ -98,47 +99,73 @@
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addEventScheduleForm">
-            <mat-form-field>
-                <input formControlName="EventNo" matInput placeholder="Event Code">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput formControlName="DateFrom" [matDatepicker]="DateFrom" placeholder="Date From">
-                <mat-datepicker-toggle matSuffix [for]="DateFrom"></mat-datepicker-toggle>
-                <mat-datepicker #DateFrom></mat-datepicker>
-            </mat-form-field>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="EventNo" matInput placeholder="Event Code">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="DateFrom" [matDatepicker]="DateFrom" placeholder="Date From">
+                        <mat-datepicker-toggle matSuffix [for]="DateFrom"></mat-datepicker-toggle>
+                        <mat-datepicker #DateFrom></mat-datepicker>
+                    </mat-form-field>
 
-            <mat-form-field>
-                <input matInput formControlName="DateTo" [matDatepicker]="DateTo" placeholder="Date to">
-                <mat-datepicker-toggle matSuffix [for]="DateTo"></mat-datepicker-toggle>
-                <mat-datepicker #DateTo></mat-datepicker>
-            </mat-form-field>
-            <div>
-                <mat-label>Time From</mat-label>
-                <nz-time-picker matInput formControlName="TimeFrom" [(ngModel)]="time1" nzFormat="HH:mm:ss">
-                </nz-time-picker>
+                </div>
             </div>
-            <div>
-                <mat-label>Time To</mat-label>
-                <nz-time-picker matInput formControlName="TimeTo" [(ngModel)]="time2" nzFormat="HH:mm:ss">
-                </nz-time-picker>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="DateTo" [matDatepicker]="DateTo" placeholder="Date to">
+                        <mat-datepicker-toggle matSuffix [for]="DateTo"></mat-datepicker-toggle>
+                        <mat-datepicker #DateTo></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <!-- <mat-label>Time From</mat-label> -->
+                        <nz-time-picker class="example-full-width" style="margin-top: 10px;" placeholder="Time From" matInput formControlName="TimeFrom" [(ngModel)]="time1" nzFormat="HH:mm:ss">
+                        </nz-time-picker>
+                    </div>
+                </div>
             </div>
-            <mat-form-field>
-                <input formControlName="Location" matInput placeholder="Book id">
-            </mat-form-field>
-            <mat-form-field>
-                <input formControlName="OrganizaedBy" matInput placeholder="Organizaed By">
-            </mat-form-field>
-
-            <mat-form-field>
-                <input formControlName="AwardNo" matInput placeholder="Award Code">
-            </mat-form-field>
-            <mat-form-field>
-                <input formControlName="EventIncharge" matInput placeholder="Event Incharge">
-            </mat-form-field>
-            <mat-form-field>
-                <textarea matInput formControlName="Description" placeholder="Description"></textarea>
-            </mat-form-field>
-
+            <div class="row">
+                <div class="col-md-6">
+                        <!-- <mat-label>Time To</mat-label> -->
+                        <nz-time-picker  class="example-full-width" style="margin-top: 10px;" matInput formControlName="TimeTo" placeholder="Time To" [(ngModel)]="time2" nzFormat="HH:mm:ss">
+                        </nz-time-picker>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="Location" matInput placeholder="Book id">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="OrganizaedBy" matInput placeholder="Organizaed By">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="AwardNo" matInput placeholder="Award Code">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field style="margin-top: 15px;" class="example-full-width">
+                        <input formControlName="EventIncharge" matInput placeholder="Event Incharge">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field  class="example-full-width">
+                        <textarea matInput formControlName="Description" placeholder="Description"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
         </form>
     </ng-template>
     <ng-template #modalFooter>

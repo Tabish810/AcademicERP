@@ -1095,7 +1095,7 @@ export class MenuConfig {
 							title: 'Book Issue',
 							page: '/library_management/book_issue'
 						}, {
-							title: 'MBook Return',
+							title: 'Book Return',
 							page: '/library_management/book_return'
 						},
 					]

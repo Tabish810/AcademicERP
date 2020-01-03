@@ -33,7 +33,7 @@ export class VehicleRouteComponent implements OnInit {
     this.addRoutesForm = this.formBuilder.group({
       VehicleRouteNo: new FormControl(name, Validators.required),
       FromLocation: new FormControl(name, Validators.required),
-      ToLocation: new FormControl(name),
+      ToLocation: new FormControl(name,Validators.required),
       Fare: new FormControl(name, Validators.required),
       IsActive: new FormControl(true)
     });

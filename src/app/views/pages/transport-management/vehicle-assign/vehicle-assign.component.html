@@ -4,22 +4,18 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
+        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i
+                    class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
     </div>
 </div>
 <div class="row mb-3 btn-ops-bg">
     <div class="col-lg-12">
         <div class="input-daterange form-inline pull-right" id="destination">
             <!-- <button class="btn btn-outline-primary"><span class="text">Reset</span>
-                <i class="fa fa-refresh"></i></button> -->
+                    <i class="fa fa-refresh"></i></button> -->
         </div>
     </div>
 </div>
-
-
-
-
-
 <div class="table-responsive tab-pane active" role="tabpanel" id="home" style="overflow: auto; padding-top: 2px;">
     <table id="example" id="example" class="table table-hover dataTable dtr-inline">
         <thead>
@@ -64,12 +60,12 @@
                 <th></th>
                 <th></th>
                 <!-- <th></th>
-                <th></th> -->
+                    <th></th> -->
                 <!-- <th></th>
-                <th></th>
-                <th></th> -->
+                    <th></th>
+                    <th></th> -->
                 <!-- <th></th>
-                <th></th> -->
+                    <th></th> -->
             </tr>
         </tfoot>
     </table>
@@ -85,21 +81,28 @@
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addasVehicleForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Select Route</mat-label>
+                        <mat-select formControlName="RoutNo">
+                            <mat-option [(value)]="route.VehicleRouteNo" *ngFor="let route of allRoutes">
+                                {{route.VehicleRouteNo}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Select Vehicle</mat-label>
+                        <mat-select formControlName="VehicleNo">
+                            <mat-option [(value)]="vehicle.NoPlate" *ngFor="let vehicle of allVehicles">
+                                {{vehicle.NoPlate}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
             <!-- <mat-select [(value)]="selected"></mat-select> -->
-            <mat-form-field>
-                <mat-label>Select Route</mat-label>
-                <mat-select formControlName="RoutNo">
-                    <mat-option [(value)]="route.VehicleRouteNo" *ngFor="let route of allRoutes">
-                        {{route.VehicleRouteNo}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Select Vehicle</mat-label>
-                <mat-select formControlName="VehicleNo">
-                    <mat-option [(value)]="vehicle.NoPlate" *ngFor="let vehicle of allVehicles">{{vehicle.NoPlate}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
         </form>
     </ng-template>
     <ng-template #modalFooter>
