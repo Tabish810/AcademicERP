@@ -4,7 +4,8 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
+        <button nz-button [nzType]="'primary'" (click)="showModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+                New</span></button>
     </div>
 
     <div class="row btn-ops-bg">
@@ -97,8 +98,16 @@
         <ng-template #modalContent>
             <form autocomplete="off" [formGroup]="addSubjectForm">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4">
-                        <div class="form-group">
+                    <div class="col-lg-6 col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="subjectcode" type="number" tooltip="eg 676" matInput
+                                placeholder="Subject Code"
+                                [ngClass]="{ 'is-invalid': submitted && f.subjectcode.errors }">
+                        </mat-form-field>
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.subjectcode.errors.required">Subject ID is required</div>
+                        </div>
+                        <!-- <div class="form-group">
                             <label>Subject Code</label>
                             <input class="form-control" formControlName="subjectcode" type="number" min="0"
                                 placeholder="eg: 676" [ngClass]="{ 'is-invalid': submitted && f.subjectcode.errors }">
@@ -106,24 +115,42 @@
                             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                 <div *ngIf="f.subjectcode.errors.required">Subject ID is required</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="col-lg-4 col-md-4">
-                        <div class="form-group">
+                    <div class="col-lg-6 col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="name" matInput placeholder="Subject Name"
+                                [ngClass]="{ 'is-invalid': submitted && f.subjectcode.errors }">
+                        </mat-form-field>
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.subjectcode.errors.required">Subject name is required</div>
+                        </div>
+                        <!-- <div class="form-group">
                             <label>Subject Name</label>
                             <input class="form-control" formControlName="name" type="text" class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
                             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                 <div *ngIf="f.name.errors.required">Subject name is required</div>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-4">
+                <!-- <div class="col-lg-12 col-md-12"> -->
+                <!-- <div class="form-group"> -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Assign Class</mat-label>
+                            <mat-select formControlName="CountrNo">
+                                <mat-option selected value="'null'">Select Classs</mat-option>
+                                <mat-option [value]="cl.ClassID" *ngFor="let cl of allClasses">
+                                    {{cl.ClassName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-4">
                                 <label>Assign Class:</label>
                             </div>
                             <div class="col-md-8">
@@ -133,19 +160,19 @@
                                         {{cl.ClassName}}</option>
                                 </select>
                             </div>
-                        </div>
-                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                            <div *ngIf="f.class.errors.required">Class name is required</div>
-                        </div>
+                        </div> -->
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.class.errors.required">Class name is required</div>
                     </div>
-
                 </div>
+
+                <!-- </div> -->
             </form>
         </ng-template>
         <ng-template #modalFooter>
             <div class="col-lg-12 text-right">
                 <div class="btn-group mr-2">
-                    <button class="btn btn-success" (click)="onSave()">
+                    <button class="btn btn-success" [disabled] = "addSubjectForm.invalid" (click)="onSave()">
                         <i class="fa fa-save"></i>
                         <span class="text">Save</span>
                     </button>

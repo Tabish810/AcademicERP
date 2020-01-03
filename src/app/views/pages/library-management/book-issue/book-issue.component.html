@@ -4,7 +4,8 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
+        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i
+                    class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
     </div>
 </div>
 <div class="row mb-3 btn-ops-bg">
@@ -84,37 +85,51 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add new Institute
+        Issue Book
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addIssueBookForm">
-            <mat-form-field>
-                <input formControlName="SubjectNo" matInput placeholder="Subject Code">
-            </mat-form-field>
-            <mat-form-field>
-                <input formControlName="BookID" matInput placeholder="Book id">
-            </mat-form-field>
-            <mat-form-field>
-                <input formControlName="IssueTo" matInput placeholder="Issue To">
-            </mat-form-field>
-
-            <mat-form-field>
-                <input formControlName="IssueDate" matInput [matDatepicker]="picker1" placeholder="Issue Date">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field>
-                <input formControlName="EpectedReturn" matInput [matDatepicker]="picker2"
-                    placeholder="Epected Return Date">
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field>
-                <input formControlName="IssuedBy" matInput placeholder="Issued By">
-            </mat-form-field>
-
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="SubjectNo" matInput placeholder="Subject Code">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="BookID" matInput placeholder="Book id">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="IssueTo" matInput placeholder="Issue To">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="IssueDate" matInput [matDatepicker]="picker1" placeholder="Issue Date">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="EpectedReturn" matInput [matDatepicker]="picker2"
+                            placeholder="Epected Return Date">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="IssuedBy" matInput placeholder="Issued By">
+                    </mat-form-field>
+                </div>
+            </div>
         </form>
     </ng-template>
     <ng-template #modalFooter>

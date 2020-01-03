@@ -30,7 +30,7 @@ export class InstitutesComponent implements OnInit {
 
   ngOnInit() {
     this.addInstituteForm = this.formBuilder.group({
-      InstituteNo: new FormControl(name, Validators.required),
+      InstituteCode: new FormControl(name, Validators.required),
       InstituteName: new FormControl(name, Validators.required),
       TaxID: new FormControl(name),
       RegistrationNo: new FormControl(name, Validators.required),
@@ -93,16 +93,17 @@ export class InstitutesComponent implements OnInit {
     this.addInstituteForm.reset();
   }
   onSave() {
+    console.log(this.addInstituteForm.value);
     if (!this.isOnEdit) {
       this.apiService.instituteService.createInstitute(this.addInstituteForm.value).subscribe((res: any) => {
         //this.addInstituteForm.removeControl('StudentNO');
         this.getAllInstitute();
         this.isVisible = false;
-        this.notification.create("success", "Success", "Exam Added Successfully")
+        this.notification.create("success", "Success", "Institute Added Successfully")
         this.isVisible = false;
       }, (err) => {
         this.isVisible = false;
-        this.notification.create("error", "Failed", "Exam Adding Failed")
+        this.notification.create("error", "Failed", "Institute Adding Failed")
       })
     } else {
 
@@ -219,10 +220,10 @@ export class InstitutesComponent implements OnInit {
     $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
 
     // Buttons
-    $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right","10px");
-    $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right","10px");;
-    $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right","10px");;
-    $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right","10px");;
+    $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right", "10px");
+    $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right", "10px");;
 
     // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
@@ -232,7 +233,7 @@ export class InstitutesComponent implements OnInit {
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');
 
-    
+
     $('#example_wrapper').addClass('row');
     $('#example_length').addClass('col-lg-6 col-md-6');
     $('#example_filter').addClass('col-lg-6 col-md-6');

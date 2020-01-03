@@ -4,7 +4,8 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
+        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i
+                    class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
     </div>
 </div>
 <div class="row mb-3 btn-ops-bg">
@@ -75,20 +76,33 @@
     <ng-template #modalContent>
         <form [formGroup]="addStateForm">
             <!-- <mat-select [(value)]="selected"></mat-select> -->
-            <mat-form-field>
-                <input formControlName="Name" matInput placeholder="State Name">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput formControlName="StateCode" type="text" placeholder="State Code">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Select Country</mat-label>
-                <mat-select formControlName="CountrNo">
-                    <mat-option [value]="ct.CountryCode" *ngFor="let ct of allCountries">
-                        {{ct.Name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field  class="example-full-width">
+                        <input formControlName="Name" matInput placeholder="State Name">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field  class="example-full-width">
+                        <input matInput formControlName="StateCode" type="text" placeholder="State Code">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <mat-form-field  class="example-full-width">
+                        <mat-label>Select Country</mat-label>
+                        <mat-select formControlName="CountrNo">
+                            <mat-option [value]="ct.CountryCode" *ngFor="let ct of allCountries">
+                                {{ct.Name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-md-4"></div>
+            </div>
 
 
         </form>
@@ -96,7 +110,7 @@
     <ng-template #modalFooter>
         <div class="col-lg-12 text-right">
             <div class="btn-group mr-2">
-                <button [disabled]="!addStateForm.valid" class="btn btn-success" (click)="onSave()">
+                <button [disabled]="addStateForm.invalid" class="btn btn-success" (click)="onSave()">
                     <i class="fa fa-save"></i>
                     <span class="text">Save</span>
                 </button>
