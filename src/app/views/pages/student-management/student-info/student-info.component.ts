@@ -20,6 +20,7 @@ export class StudentInfoComponent implements OnInit {
   addstudentForm: FormGroup
   submitted = false;
   allStudent;
+  allClasses;
   student;
   error_info = 'A';
   @ViewChild('wizard', { static: true }) el: ElementRef;
@@ -156,10 +157,7 @@ export class StudentInfoComponent implements OnInit {
       BloodGroup: new FormControl(name),
       IsActive: new FormControl(name, Validators.required)
     });
-
-
-
-
+    this.getAllClass();
     let edit_id;
     edit_id = this.route.snapshot.queryParams.edit_id;
     let view_id;
@@ -176,6 +174,14 @@ export class StudentInfoComponent implements OnInit {
 
 
 
+  }
+  getAllClass() {
+    this.apiService.classService.getAllClass().subscribe((res: any) => {
+      this.allClasses = res;
+      console.log("Classes ", this.allClasses)
+      console.log("Response ", res)
+      // this.DataTablesFunctionCallAfterDataInit();
+    })
   }
 
   editRecodr(id) {

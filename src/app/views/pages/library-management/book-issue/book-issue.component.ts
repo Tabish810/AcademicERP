@@ -28,7 +28,13 @@ export class BookIssueComponent implements OnInit {
   singleBookIssue;
   constructor(private notification: NzNotificationService, private formBuilder: FormBuilder, private httpClient: HttpClient, private chRef: ChangeDetectorRef, private apiService: ApiServiceService) { }
 
-
+  allSubject;
+  getallSubject() {
+    this.apiService.subjectService.getAllSubject().subscribe((res: any) => {
+      this.allSubject = res;
+      console.log("all subjects ", this.allSubject)
+    })
+  }
   ngOnInit() {
     this.addIssueBookForm = this.formBuilder.group({
       SubjectNo: new FormControl(name, Validators.required),
@@ -40,6 +46,7 @@ export class BookIssueComponent implements OnInit {
       IsActive: new FormControl(name)
     });
     this.getAllIssueBooks();
+    this.getallSubject();
   }
 
   getAllIssueBooks() {

@@ -36,7 +36,7 @@ export class SubjectComponent implements OnInit {
     SubjectCode: null,
     FK_ClassID: null,
     SubjectID: null,
-    IsActive:true
+    IsActive: true
 
   }
 
@@ -49,9 +49,9 @@ export class SubjectComponent implements OnInit {
   ngOnInit() {
     this.addSubjectForm = this.formBuilder.group({
       name: new FormControl(name, Validators.required),
-      subjectcode: new FormControl(name, [Validators.required, Validators.minLength(4)]),
+      SubjectCode: new FormControl(name, [Validators.required, Validators.minLength(4)]),
       class: new FormControl(name, Validators.required),
-      IsActive : new FormControl(name)
+      IsActive: new FormControl(name)
     });
 
     this.getAllClass();
@@ -79,10 +79,10 @@ export class SubjectComponent implements OnInit {
     c = this.allSubject.filter(x => x.SubjectID == id);
     console.log("Seleted row data ", c);
     if (c != undefined || c != null) {
-      console.log("Field 1", c[0].FK_ClassID)
+      console.log("Field 1", c[0].ClassNo)
       console.log("Field 1", c[0].SubjectCode)
       console.log("Field 1", c[0].SubjectName)
-      this.addSubjectForm.setValue({ name: c[0].SubjectName, subjectcode: c[0].SubjectCode, class: c[0].FK_ClassID })
+      this.addSubjectForm.setValue({ name: c[0].SubjectName, SubjectCode: c[0].SubjectCode, class: c[0].ClassNo, IsActive: c[0].IsActive })
       this.addSubjectForm.disable();
     }
   }
@@ -130,9 +130,9 @@ export class SubjectComponent implements OnInit {
     if (c != undefined || c != null) {
       console.log("Field 1", c[0].SubjectCode)
       console.log("Field 1", c[0].SubjectName)
-      console.log("Field 1", c[0].FK_ClassID)
+      console.log("Field 1", c[0].ClassNo)
       this.SubjectID = c[0].SubjectID;
-      this.addSubjectForm.setValue({ name: c[0].SubjectName, subjectcode: c[0].SubjectCode, class: c[0].FK_ClassID })
+      this.addSubjectForm.setValue({ name: c[0].SubjectName, SubjectCode: c[0].SubjectCode, class: c[0].ClassNo, IsActive: c[0].IsActive })
     }
   }
 
@@ -142,7 +142,7 @@ export class SubjectComponent implements OnInit {
     if (this.addSubjectForm.invalid) {
       return;
     } else {
-      this.subject.SubjectCode = this.addSubjectForm.get('subjectcode').value;
+      this.subject.SubjectCode = this.addSubjectForm.get('SubjectCode').value;
       this.subject.SubjectName = this.addSubjectForm.get('name').value;
       this.subject.FK_ClassID = this.addSubjectForm.get('class').value;
       this.subject.IsActive = this.addSubjectForm.get('IsActive').value;
@@ -162,7 +162,7 @@ export class SubjectComponent implements OnInit {
         })
       }
       else {
-        this.updateSubject.SubjectCode = this.addSubjectForm.get('subjectcode').value;
+        this.updateSubject.SubjectCode = this.addSubjectForm.get('SubjectCode').value;
         this.updateSubject.SubjectName = this.addSubjectForm.get('name').value;
         this.updateSubject.FK_ClassID = this.addSubjectForm.get('class').value;
         this.updateSubject.IsActive = this.addSubjectForm.get('IsActive').value;
@@ -267,15 +267,15 @@ export class SubjectComponent implements OnInit {
       ]
     });
 
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
-   // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
+    // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
     $('div.dt-buttons span').addClass('text');
 

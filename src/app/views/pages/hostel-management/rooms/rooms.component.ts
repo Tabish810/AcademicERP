@@ -42,6 +42,7 @@ export class RoomsComponent implements OnInit {
     });
     this.getAllRoomType();
     this.getAllRooms();
+    this.getAllHostel();
   }
   getAllRooms() {
     this.apiService.roomService.getAllRooms().subscribe((res: any) => {
@@ -51,6 +52,14 @@ export class RoomsComponent implements OnInit {
       this.DataTablesFunctionCallAfterDataInit();
     })
 
+  }
+  allHostels;
+  getAllHostel() {
+    this.apiService.hostelService.getAllHostels().subscribe(res => {
+      this.allHostels = res;
+      console.log("All Hostel", this.allHostels);
+      this.DataTablesFunctionCallAfterDataInit();
+    })
   }
   getAllRoomType() {
     this.apiService.roomTypeService.getAllRoomTypes().subscribe((res: any) => {

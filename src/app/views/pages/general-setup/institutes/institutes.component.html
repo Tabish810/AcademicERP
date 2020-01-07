@@ -81,10 +81,16 @@
 <!-- Add new Institute -->
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
     (nzOnCancel)="handleCancel()">
-
-    <ng-template #modalTitle>
-        Add Institute
-    </ng-template>
+    <!-- <span > -->
+        <ng-template #modalTitle>
+            <span *ngIf="!isOnEdit">
+                Add Institute
+            </span>
+            <span *ngIf="isOnEdit">
+                Update Institute
+            </span>
+        </ng-template>
+    <!-- </span> -->
     <ng-template #modalContent>
         <form [formGroup]="addInstituteForm">
             <!-- <mat-select [(value)]="selected"></mat-select> -->

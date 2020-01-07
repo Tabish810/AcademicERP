@@ -109,8 +109,8 @@
                     <mat-form-field class="example-full-width">
                         <mat-label>Select House Incharge</mat-label>
                         <mat-select formControlName="HouseMasterID">
-                            <mat-option [value]="st.StateCode" *ngFor="let st of allMaster">
-                                {{st.Name}}
+                            <mat-option [value]="head.EmployeeNo" *ngFor="let head of allMaster">
+                                {{head.FirstName}} {{head.MiddleName}} {{head.LastName}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -119,9 +119,9 @@
                     <mat-form-field class="example-full-width">
                         <mat-label>Select House Type</mat-label>
                         <mat-select formControlName="HouseType">
-                            <mat-option [value]="st.StateCode" *ngFor="let st of allMaster">
-                                {{st.Name}}
-                            </mat-option>
+                           <mat-option value="Boys">Boys</mat-option>
+                           <mat-option value="Girls">Girls</mat-option>
+                           <mat-option value="Other">Other</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -146,7 +146,7 @@
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input matInput formControlName="HContactNo" type="number" placeholder="Hostel Contact">
+                        <input matInput formControlName="HContactNo" type="text" placeholder="Hostel Contact">
                     </mat-form-field>
                 </div>
             </div>

@@ -41,8 +41,15 @@ export class BookReturnComponent implements OnInit {
       IsActive: new FormControl(name)
     });
     this.getAllIssueBooks();
+    this.getallSubject();
   }
-
+  allSubject;
+  getallSubject() {
+    this.apiService.subjectService.getAllSubject().subscribe((res: any) => {
+      this.allSubject = res;
+      console.log("all subjects ", this.allSubject)
+    })
+  }
   getAllIssueBooks() {
     this.apiService.bookReturnService.getAllBookReturn().subscribe(res => {
       this.allReturnBooks = res;

@@ -21,8 +21,8 @@
         <thead>
             <tr>
                 <th>S# </th>
-                <th>Book Name</th>
                 <th>Book Code</th>
+                <th>Book Name</th>
                 <th>ISBN No</th>
                 <th>Publisher</th>
                 <th>Author</th>
@@ -37,8 +37,8 @@
         <tbody class="FontSizeTable">
             <tr class="odd" role="row" *ngFor="let book of allBooks; let i = index;">
                 <td>{{i + 1}}</td>
-                <td>{{book.Name}}</td>
                 <td>{{book.BookCode}}</td>
+                <td>{{book.Name}}</td>
                 <td>{{book.IsbnNP}}</td>
                 <td>{{book.Publisher}}</td>
                 <td>{{book.Author}}</td>
@@ -127,7 +127,10 @@
                     <mat-form-field class="example-full-width">
                         <mat-label>Select Subject</mat-label>
                         <mat-select formControlName="SubjectNo">
-                            <mat-option value="option1">Option 1</mat-option>
+                            <mat-option selected value="'null'">Select Subject</mat-option>
+                                <mat-option [value]="sub.SubjectCode" *ngFor="let sub of allSubject">
+                                    {{sub.SubjectName}}
+                                </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>

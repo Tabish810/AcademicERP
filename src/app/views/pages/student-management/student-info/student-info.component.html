@@ -155,8 +155,15 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-md-4">
-                                <mat-form-field>
+                                <!-- <mat-form-field>
                                     <input matInput formControlName="AddmitionIn" placeholder="Admission In">
+                                </mat-form-field> -->
+                                <mat-form-field class="example-full-width">
+                                    <mat-select formControlName="AddmitionIn" placeholder="Select Class">
+                                        <mat-option [value]="class.ClassID" *ngFor="let class of allClasses">
+                                            {{class.ClassName}}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                             <div class="col-md-4">

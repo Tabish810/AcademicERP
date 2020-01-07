@@ -52,7 +52,7 @@ export class EventAwardsComponent implements OnInit {
     this.isOnEdit = false;
     if (type == 'new') {
       this.isOnEdit = false;
-      this, this.addAwardForm.enable();
+     this.addAwardForm.enable();
       this.addAwardForm.reset();
       const formControl = this.addAwardForm.get('AwardID');
       if (formControl) {
@@ -61,7 +61,7 @@ export class EventAwardsComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
-      this, this.addAwardForm.enable();
+     this.addAwardForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
@@ -115,7 +115,6 @@ export class EventAwardsComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.AwardID = id;
@@ -128,7 +127,6 @@ export class EventAwardsComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.eventAwardsService.getEventAwardsById(id).subscribe((res: any) => {
       this.singleDepart = res.Table[0];

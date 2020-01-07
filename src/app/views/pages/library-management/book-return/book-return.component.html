@@ -34,7 +34,7 @@
         <tbody class="FontSizeTable">
             <tr class="odd" role="row" *ngFor="let bookIssue of allReturnBooks; let i = index;">
                 <td>{{i + 1}}</td>
-                <td>{{bookIssue.SubjectNo}}</td>
+                <td>{{bookIssue.subjectno}}</td>
                 <td>{{bookIssue.BookNo}}</td>
                 <td>{{bookIssue.ReturnBy}}</td>
                 <td>{{bookIssue.IssueDate | date}}</td>
@@ -89,7 +89,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input formControlName="SubjectNo" matInput placeholder="Subject Code">
+                        <mat-label>Select Subject</mat-label>
+                        <mat-select formControlName="SubjectNo">
+                            <mat-option selected value="'null'">Select Subject</mat-option>
+                            <mat-option [value]="sub.SubjectCode" *ngFor="let sub of allSubject">
+                                {{sub.SubjectName}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="col-md-6">

@@ -44,6 +44,7 @@ export class BookEntryComponent implements OnInit {
       IsActive: new FormControl(name)
     });
     this.getAllBooks();
+    this.getallSubject();
   }
 
 
@@ -90,6 +91,13 @@ export class BookEntryComponent implements OnInit {
 
   onReset() {
     this.addBookForm.reset();
+  }
+  allSubject;
+  getallSubject() {
+    this.apiService.subjectService.getAllSubject().subscribe((res: any) => {
+      this.allSubject = res;
+      console.log("all subjects ", this.allSubject)
+    })
   }
   onSave() {
     if (!this.isOnEdit) {

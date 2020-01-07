@@ -21,8 +21,8 @@
         <thead>
             <tr>
                 <th>S# </th>
-                <th>City Name</th>
                 <th>City Code</th>
+                <th>City Name</th>
                 <th>State Code</th>
                 <th>Action</th>
                 <!-- <th class="not-export-col">Actions</th> -->
@@ -31,9 +31,9 @@
         <tbody class="FontSizeTable">
             <tr class="odd" role="row" *ngFor="let city of allCities; let i = index;">
                 <td>{{i + 1}}</td>
-                <td>{{city.Name}}</td>
                 <td>{{city.CityCode}}</td>
-                <td>{{city.CountrNo}}</td>
+                <td>{{city.Name}}</td>
+                <td>{{city.StateNo}}</td>
                 <th>
                     <ng-container matColumnDef="actions">
                         <mat-cell>

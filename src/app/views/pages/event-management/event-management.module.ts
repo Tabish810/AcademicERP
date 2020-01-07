@@ -6,7 +6,7 @@ import { EventScheduleComponent } from './event-schedule/event-schedule.componen
 import { EventAwardsComponent } from './event-awards/event-awards.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../../shared/shared.module';
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 const routes: Routes = [
   {
     path: '',
@@ -40,6 +40,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
+    OwlNativeDateTimeModule,
+    OwlDateTimeModule,
     RouterModule.forChild(routes),
   ]
 })

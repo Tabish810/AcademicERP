@@ -4,7 +4,8 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
+        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i
+                    class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
     </div>
 </div>
 <div class="row mb-3 btn-ops-bg">
@@ -92,10 +93,10 @@
             <!-- <mat-select [(value)]="selected"></mat-select> -->
             <div class="row">
                 <div class="col-md-6">
-                        <mat-form-field class="example-full-width">
-                            <input formControlName="HouseRoomCode" matInput placeholder="House Room Code">
-                        </mat-form-field>
-                    
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="HouseRoomCode" matInput placeholder="House Room Code">
+                    </mat-form-field>
+
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
@@ -107,8 +108,16 @@
             <div class="row">
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input formControlName="HouseNo" matInput type="text" placeholder="House Code">
+                        <mat-label>Select House Code</mat-label>
+                        <mat-select formControlName="HouseNo">
+                            <mat-option [value]="hostel.HouseNo" *ngFor="let hostel of allHostels">
+                                {{hostel.HouseName}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
+                    <!-- <mat-form-field class="example-full-width">
+                        <input formControlName="HouseNo" matInput type="text" placeholder="House Code">
+                    </mat-form-field> -->
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
@@ -137,10 +146,10 @@
                 <div class="col-md-12">
                     <mat-form-field class="example-full-width">
                         <textarea formControlName="Description" matInput placeholder="Description"></textarea>
-                    </mat-form-field> 
+                    </mat-form-field>
                 </div>
             </div>
-            
+
         </form>
     </ng-template>
     <ng-template #modalFooter>

@@ -45,7 +45,7 @@ export class SectionComponent implements OnInit {
   ngOnInit() {
     this.addSectionForm = this.formBuilder.group({
       name: new FormControl(name, Validators.required),
-      sectionId: new FormControl(name, [Validators.required, Validators.minLength(4)]),
+      sectionId: new FormControl(name, [Validators.required]),
       IsActive : new FormControl(name)
     });
     this.getAllSection();
@@ -63,7 +63,7 @@ export class SectionComponent implements OnInit {
       console.log("Field 1", c[0].SectionID)
       console.log("Field 1", c[0].SectionCode)
       console.log("Field 1", c[0].SectionName)
-      this.addSectionForm.setValue({ name: c[0].SectionName, sectionId: c[0].SectionCode })
+      this.addSectionForm.setValue({ name: c[0].SectionName, sectionId: c[0].SectionCode, IsActive:c[0].IsActive  })
       this.addSectionForm.disable();
     }
   }
@@ -98,11 +98,12 @@ export class SectionComponent implements OnInit {
     c = this.allSection.filter(x => x.SectionID == id);
     console.log("Seleted row data ", c);
     if (c != undefined || c != null) {
-      console.log("Field 1", c[0].SectionCode)
-      console.log("Field 1", c[0].SectionName)
-      console.log("Field 1", c[0].SectionID)
+      console.log("Field", c[0].SectionCode)
+      console.log("Field", c[0].SectionName)
+      console.log("Field", c[0].SectionID)
+      console.log("Field", c[0].IsActive)
       this.SectionID = c[0].SectionID;
-      this.addSectionForm.setValue({ name: c[0].SectionName, sectionId: c[0].SectionCode })
+      this.addSectionForm.setValue({ name: c[0].SectionName, sectionId: c[0].SectionCode, IsActive:c[0].IsActive })
     }
   }
 

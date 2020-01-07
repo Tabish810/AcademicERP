@@ -60,8 +60,10 @@ export class InstitutesComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
+    this.isOnEdit = false;
     if (type == 'new') {
-      this, this.addInstituteForm.enable();
+      this.isOnEdit = false;
+      this.addInstituteForm.enable();
       this.addInstituteForm.reset();
       const formControl = this.addInstituteForm.get('InstitueID');
       if (formControl) {
@@ -69,11 +71,11 @@ export class InstitutesComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
-      this, this.addInstituteForm.enable();
+      this.isOnEdit = true;
+      this.addInstituteForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
       this.addInstituteForm.disable();
     }
   }
@@ -124,7 +126,6 @@ export class InstitutesComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.InstitueID = id;
@@ -137,7 +138,6 @@ export class InstitutesComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.instituteService.getInstituteById(id).subscribe((res: any) => {
       this.singleExam = res.Table[0];
@@ -149,15 +149,18 @@ export class InstitutesComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.InstitueID = id;
-    this.apiService.instituteService.deleteInstitute(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllInstitute();
-      this.notification.create("success", "Success", "Exam Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.InstitueID = id;
+      this.apiService.instituteService.deleteInstitute(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllInstitute();
+        this.notification.create("success", "Success", "Exam Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "Exam Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "Exam Record Deletion Failed")
+      })
+    }
+
   }
   DataTablesFunctionCallAfterDataInit() {
     if (!this.flag) {
