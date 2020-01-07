@@ -32,7 +32,7 @@ export class DepartmentComponent implements OnInit {
     this.addDepartForm = this.formBuilder.group({
       DepartmentCode: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllCity();
   }

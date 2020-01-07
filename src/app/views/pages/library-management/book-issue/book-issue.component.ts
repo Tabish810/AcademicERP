@@ -37,7 +37,7 @@ export class BookIssueComponent implements OnInit {
       IssueDate: new FormControl(name, Validators.required),
       EpectedReturn: new FormControl(name),
       IssuedBy: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllIssueBooks();
   }

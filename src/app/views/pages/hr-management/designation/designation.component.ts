@@ -32,7 +32,7 @@ export class DesignationComponent implements OnInit {
     this.addDesignationForm = this.formBuilder.group({
       DesignatioCode: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllCity();
   }

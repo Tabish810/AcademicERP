@@ -40,7 +40,7 @@ export class FeesSubmitComponent implements OnInit {
       Date: new FormControl(name, Validators.required),
       LateFessAmount: new FormControl(0),
       AdditionalAmount: new FormControl(0),
-      IsActive: new FormControl(true),
+      IsActive: new FormControl(name),
       Description: new FormControl('')
     });
     this.getAllStduent();

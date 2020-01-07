@@ -38,7 +38,7 @@ export class BookReturnComponent implements OnInit {
       IssueDate: new FormControl(name, Validators.required),
       ReturnDate: new FormControl(name),
       RevievedBy: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllIssueBooks();
   }

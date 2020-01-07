@@ -34,7 +34,7 @@ export class EventAwardsComponent implements OnInit {
     this.addAwardForm = this.formBuilder.group({
       AwardNo: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllCity();
   }

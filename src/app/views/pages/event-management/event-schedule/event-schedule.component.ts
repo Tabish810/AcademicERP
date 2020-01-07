@@ -44,7 +44,7 @@ export class EventScheduleComponent implements OnInit {
       AwardNo: new FormControl(name),
       EventIncharge: new FormControl(name, Validators.required),
       Description: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getallEventSchedule();
   }

@@ -35,7 +35,8 @@ export class SubjectComponent implements OnInit {
     SubjectName: null,
     SubjectCode: null,
     FK_ClassID: null,
-    SubjectID: null
+    SubjectID: null,
+    IsActive:true
 
   }
 
@@ -50,6 +51,7 @@ export class SubjectComponent implements OnInit {
       name: new FormControl(name, Validators.required),
       subjectcode: new FormControl(name, [Validators.required, Validators.minLength(4)]),
       class: new FormControl(name, Validators.required),
+      IsActive : new FormControl(name)
     });
 
     this.getAllClass();
@@ -143,6 +145,7 @@ export class SubjectComponent implements OnInit {
       this.subject.SubjectCode = this.addSubjectForm.get('subjectcode').value;
       this.subject.SubjectName = this.addSubjectForm.get('name').value;
       this.subject.FK_ClassID = this.addSubjectForm.get('class').value;
+      this.subject.IsActive = this.addSubjectForm.get('IsActive').value;
       console.log("Form data", this.addSubjectForm.value);
       if (!this.isOnEdit) {
         this.apiService.subjectService.createSubject(this.subject).subscribe((res: any) => {
@@ -152,7 +155,6 @@ export class SubjectComponent implements OnInit {
           console.log("Data before isnerting", this.subject)
           this.notification.create("success", "Success", "Subject Added Successfully");
         }, (err) => {
-
           console.log(err)
           this.addSubjectForm.reset();
           this.isVisible = false;
@@ -163,6 +165,7 @@ export class SubjectComponent implements OnInit {
         this.updateSubject.SubjectCode = this.addSubjectForm.get('subjectcode').value;
         this.updateSubject.SubjectName = this.addSubjectForm.get('name').value;
         this.updateSubject.FK_ClassID = this.addSubjectForm.get('class').value;
+        this.updateSubject.IsActive = this.addSubjectForm.get('IsActive').value;
         this.updateSubject.SubjectID = this.SubjectID;
         this.apiService.subjectService.updateSubject(this.updateSubject).subscribe((res: any) => {
           this.isVisible = false;

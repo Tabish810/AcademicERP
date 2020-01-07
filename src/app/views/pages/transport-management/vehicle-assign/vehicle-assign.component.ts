@@ -36,7 +36,7 @@ export class VehicleAssignComponent implements OnInit {
     this.addasVehicleForm = this.formBuilder.group({
       RoutNo: new FormControl(name, Validators.required),
       VehicleNo: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllVehicle();
     this.getAllRoutes();

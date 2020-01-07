@@ -35,7 +35,7 @@ export class StateComponent implements OnInit {
       StateCode: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
       CountrNo: new FormControl(name),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getallCountries();
     this.getAllStates();

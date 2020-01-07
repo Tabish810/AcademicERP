@@ -79,13 +79,20 @@
             <div class="row">
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input formControlName="Name" matInput placeholder="Exam Name">
+                        <input formControlName="ExamNo" matInput placeholder="Exam Code">
                     </mat-form-field>
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input formControlName="ExamNo" matInput placeholder="Exam Code">
+                        <input formControlName="Name" matInput placeholder="Exam Name">
                     </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                        Active
+                    </mat-slide-toggle>
                 </div>
             </div>
         </form>

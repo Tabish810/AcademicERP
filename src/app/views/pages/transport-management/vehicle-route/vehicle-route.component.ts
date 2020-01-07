@@ -35,7 +35,7 @@ export class VehicleRouteComponent implements OnInit {
       FromLocation: new FormControl(name, Validators.required),
       ToLocation: new FormControl(name,Validators.required),
       Fare: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllInstitute();
   }

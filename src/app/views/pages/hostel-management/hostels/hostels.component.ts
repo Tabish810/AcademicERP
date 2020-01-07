@@ -43,7 +43,7 @@ export class HostelsComponent implements OnInit {
       HContactNo: new FormControl(name),
       HouseAddress: new FormControl(name, Validators.required),
       NoOfBeds: new FormControl(name),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     // this.getAllStates();
     this.getAllMaster();

@@ -28,7 +28,8 @@ export class AssignClassComponent implements OnInit {
   ngOnInit() {
     this.assignclassForm = this.formBuilder.group({
       ClassID: new FormControl(name, [Validators.required, Validators.minLength(4)]),
-      SectionID: new FormControl(name, Validators.required)
+      SectionID: new FormControl(name, Validators.required),
+      IsActive : new FormControl(name)
     });
 
     this.getAllSection();

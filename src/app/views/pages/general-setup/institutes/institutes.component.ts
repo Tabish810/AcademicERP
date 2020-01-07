@@ -14,6 +14,7 @@ export class InstitutesComponent implements OnInit {
   allInstitutes;
   isVisible = false;
   isOnEdit = false;
+  checked = false;
   dataTable: any;
   addInstituteForm: FormGroup;
   flag = true;
@@ -26,8 +27,6 @@ export class InstitutesComponent implements OnInit {
   }
   singleExam;
   constructor(private notification: NzNotificationService, private formBuilder: FormBuilder, private httpClient: HttpClient, private chRef: ChangeDetectorRef, private apiService: ApiServiceService) { }
-
-
   ngOnInit() {
     this.addInstituteForm = this.formBuilder.group({
       InstituteCode: new FormControl(name, Validators.required),
@@ -46,7 +45,7 @@ export class InstitutesComponent implements OnInit {
       CityNo: new FormControl(name, Validators.required),
       PostalCode: new FormControl(name, Validators.required),
       Address: new FormControl(name),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllInstitute();
   }
@@ -111,7 +110,6 @@ export class InstitutesComponent implements OnInit {
 
       this.apiService.instituteService.updateInstitute(this.addInstituteForm.value).subscribe((res: any) => {
         this.addInstituteForm.removeControl('InstitueID');
-
         this.getAllInstitute();
         this.isVisible = false;
         this.notification.create("success", "Success", "Exam Updated Successfully")

@@ -34,7 +34,7 @@ export class ExamGradeComponent implements OnInit {
       Name: new FormControl(name, Validators.required),
       PercentageFrom: new FormControl(name, Validators.required),
       PercentageTo: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllGrades()
   }

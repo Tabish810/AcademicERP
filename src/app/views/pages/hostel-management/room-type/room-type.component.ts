@@ -33,7 +33,7 @@ export class RoomTypeComponent implements OnInit {
     this.addRoomTypeForm = this.formBuilder.group({
       RommTypeCode: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllRoomType();
   }

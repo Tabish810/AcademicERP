@@ -22,7 +22,7 @@ export class StudentInfoComponent implements OnInit {
   allStudent;
   student;
   error_info = 'A';
-  @ViewChild('wizard', {static: true}) el: ElementRef;
+  @ViewChild('wizard', { static: true }) el: ElementRef;
   panel1 = false;
   panel2 = false;
   panel3 = false;
@@ -402,14 +402,15 @@ export class StudentInfoComponent implements OnInit {
     } else {
       this.dateOfBirth = this.addstudentForm.get('DateOfBirth').value;
       this.admissionDate = this.addstudentForm.get('AddmitionDate').value;
+      let isActive = this.addstudentForm.get('IsActive').value;
       let regno;
       regno = this.addstudentForm.get('RegistrationNo').value;
       this.dateOfBirth = new Date(this.dateOfBirth).toISOString().split('T')[0]
       this.admissionDate = new Date(this.admissionDate).toISOString().split('T')[0]
       this.addstudentForm.controls['AddmitionDate'].patchValue(this.admissionDate)
       this.addstudentForm.controls['DateOfBirth'].patchValue(this.dateOfBirth)
-
       this.addstudentForm.controls['RegistrationNo'].patchValue(parseInt(regno))
+      this.addstudentForm.controls['IsActive'].patchValue(isActive);
 
       if (!this.isOnEdit) {
         this.apiService.studentService.createStudent(this.addstudentForm.value).subscribe((res: any) => {
@@ -458,26 +459,26 @@ export class StudentInfoComponent implements OnInit {
 
 
   ngAfterViewInit(): void {
-		// Initialize form wizard
-		const wizard = new KTWizard(this.el.nativeElement, {
-			startStep: 1
-		});
+    // Initialize form wizard
+    const wizard = new KTWizard(this.el.nativeElement, {
+      startStep: 1
+    });
 
-		// Validation before going to next page
-		wizard.on('beforeNext', (wizardObj) => {
-			// https://angular.io/guide/forms
-			// https://angular.io/guide/form-validation
+    // Validation before going to next page
+    wizard.on('beforeNext', (wizardObj) => {
+      // https://angular.io/guide/forms
+      // https://angular.io/guide/form-validation
 
-			// validate the form and use below function to stop the wizard's step
-			// wizardObj.stop();
-		});
+      // validate the form and use below function to stop the wizard's step
+      // wizardObj.stop();
+    });
 
-		// Change event
-		wizard.on('change', (wizard) => {
-			setTimeout(() => {
-				KTUtil.scrollTop();
-			}, 500);
-		});
+    // Change event
+    wizard.on('change', (wizard) => {
+      setTimeout(() => {
+        KTUtil.scrollTop();
+      }, 500);
+    });
   }
 
 }

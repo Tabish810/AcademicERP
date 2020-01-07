@@ -33,7 +33,7 @@ export class FeesDiscountComponent implements OnInit {
       ClassNo: new FormControl(name, Validators.required),
       AmountPer: new FormControl(name),
       Amount: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllClasses();
     this.getAllDiscount();

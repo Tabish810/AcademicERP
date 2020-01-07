@@ -34,7 +34,7 @@ export class CityComponent implements OnInit {
       CityCode: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
       StateNo: new FormControl(name),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllStates();
     this.getAllCity();
@@ -90,6 +90,7 @@ export class CityComponent implements OnInit {
   }
   onSave() {
     if (!this.isOnEdit) {
+      console.log("added")
       this.apiService.cityService.createCity(this.addCityForm.value).subscribe((res: any) => {
         //this.addCityForm.removeControl('StudentNO');
         this.getAllCity();

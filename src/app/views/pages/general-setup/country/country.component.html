@@ -74,13 +74,20 @@
             <div class="row">
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input formControlName="Name" matInput placeholder="Country Name">
+                        <input matInput formControlName="CountryCode" type="text" placeholder="Country Code">
                     </mat-form-field>
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input matInput formControlName="CountryCode" type="text" placeholder="Country Code">
+                        <input formControlName="Name" matInput placeholder="Country Name">
                     </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                        Active
+                    </mat-slide-toggle>
                 </div>
             </div>
             <!-- <mat-select [(value)]="selected"></mat-select> -->

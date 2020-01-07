@@ -26,7 +26,6 @@ export class ClassComponent implements OnInit {
     ClassCode: null,
     SectionNo: null,
     IsActive: true,
-
   }
 
   updateClass = {
@@ -50,7 +49,8 @@ export class ClassComponent implements OnInit {
     this.addclassForm = this.formBuilder.group({
       name: new FormControl(name, Validators.required),
       classcode: new FormControl(name, [Validators.required, Validators.minLength(4)]),
-      section: new FormControl(name, Validators.required)
+      section: new FormControl(name, Validators.required),
+      IsActive : new FormControl(name)
     });
 
     this.getAllSection();
@@ -72,7 +72,9 @@ export class ClassComponent implements OnInit {
       this.class.ClassCode = this.addclassForm.get('classcode').value;
       this.class.ClassName = this.addclassForm.get('name').value;
       this.class.SectionNo = this.addclassForm.get('section').value;
+      this.class.IsActive = this.addclassForm.get('IsActive').value;
       console.log("Form data", this.addclassForm.value);
+      console.log("Form data", this.class);
       if (!this.isOnEdit) {
         this.apiService.classService.createClass(this.class).subscribe((res: any) => {
           this.isVisible = false;
@@ -97,6 +99,7 @@ export class ClassComponent implements OnInit {
         this.updateClass.ClassName = this.addclassForm.get('name').value;
         this.updateClass.SectionNo = this.addclassForm.get('section').value;
         this.updateClass.ClassID = this.ClassID;
+        this.updateClass.IsActive = this.addclassForm.get('IsActive').value;
         console.log("Form data for update", this.addclassForm.value);
         console.log("Form data for update class", this.class);
         this.apiService.classService.updateClass(this.updateClass).subscribe((res: any) => {
@@ -114,8 +117,6 @@ export class ClassComponent implements OnInit {
           this.notification.create("error", "Failed", "Class udpating Failed")
 
         })
-
-
       }
     }
 

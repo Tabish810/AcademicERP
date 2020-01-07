@@ -22,13 +22,15 @@ export class SectionComponent implements OnInit {
   submitted = false;
   section = {
     SectionName: null,
-    SectionCode: null
+    SectionCode: null,
+    IsActive : true
   }
 
   updateSection = {
     SectionName: null,
     SectionCode: null,
-    SectionID: null
+    SectionID: null,
+    IsActive : true
   }
 
   DeleteSection = {
@@ -43,7 +45,8 @@ export class SectionComponent implements OnInit {
   ngOnInit() {
     this.addSectionForm = this.formBuilder.group({
       name: new FormControl(name, Validators.required),
-      sectionId: new FormControl(name, [Validators.required, Validators.minLength(4)])
+      sectionId: new FormControl(name, [Validators.required, Validators.minLength(4)]),
+      IsActive : new FormControl(name)
     });
     this.getAllSection();
   }
@@ -111,6 +114,7 @@ export class SectionComponent implements OnInit {
     } else {
       this.section.SectionCode = this.addSectionForm.get('sectionId').value;
       this.section.SectionName = this.addSectionForm.get('name').value;
+      this.section.IsActive = this.addSectionForm.get('IsActive').value;
       console.log("Form data", this.addSectionForm.value);
       if (!this.isOnEdit) {
         this.apiService.sectionService.createSection(this.section).subscribe((res: any) => {
@@ -131,6 +135,7 @@ export class SectionComponent implements OnInit {
         this.updateSection.SectionCode = this.addSectionForm.get('sectionId').value;
         this.updateSection.SectionName = this.addSectionForm.get('name').value;
         this.updateSection.SectionID = this.SectionID;
+        this.updateSection.IsActive = this.addSectionForm.get('IsActive').value;
         this.apiService.sectionService.updateSection(this.updateSection).subscribe((res: any) => {
           this.isVisible = false;
           this.addSectionForm.reset();

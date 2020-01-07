@@ -38,7 +38,7 @@ export class RoomsComponent implements OnInit {
       TotalBeds: new FormControl(name),
       Price: new FormControl(name, Validators.required),
       Description: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllRoomType();
     this.getAllRooms();

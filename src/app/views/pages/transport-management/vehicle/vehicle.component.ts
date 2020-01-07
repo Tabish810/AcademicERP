@@ -37,7 +37,7 @@ export class VehicleComponent implements OnInit {
       DriverContactNo: new FormControl(name),
       DriverLicenceno: new FormControl(name, Validators.required),
       Description: new FormControl(name),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllInstitute();
   }

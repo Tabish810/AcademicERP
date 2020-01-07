@@ -41,7 +41,7 @@ export class BookEntryComponent implements OnInit {
       Price: new FormControl(name),
       Date: new FormControl(name, Validators.required),
       Description: new FormControl(name),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllBooks();
   }
