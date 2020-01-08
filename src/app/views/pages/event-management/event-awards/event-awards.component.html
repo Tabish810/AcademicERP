@@ -66,7 +66,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add Award
+        <span *ngIf="!isOnEdit && !isView">
+            Add Award
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Award
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addAwardForm">

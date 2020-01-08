@@ -86,7 +86,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add Room
+        <span *ngIf="!isOnEdit && !isView">
+            Add Room
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Room
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addRoom">
@@ -96,13 +104,11 @@
                     <mat-form-field class="example-full-width">
                         <input formControlName="HouseRoomCode" matInput placeholder="House Room Code">
                     </mat-form-field>
-
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
                         <input matInput formControlName="Name" type="text" placeholder="Room Name">
                     </mat-form-field>
-
                 </div>
             </div>
             <div class="row">

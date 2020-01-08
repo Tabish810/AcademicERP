@@ -4,7 +4,7 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+        <button nz-button [nzType]="'primary'" (click)="showAddModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add
                 New</span></button>
     </div>
 
@@ -87,7 +87,15 @@
         (nzOnCancel)="handleCancel()">
 
         <ng-template #modalTitle>
-            Add Section
+            <span *ngIf=" !isOnEdit && !isOnView">
+                Add Section
+            </span>
+            <span *ngIf="isOnEdit && !isOnView">
+                Update Section
+            </span>
+            <span *ngIf="isOnView">
+                View Details
+            </span>
         </ng-template>
         <ng-template #modalContent>
             <form autocomplete="off" [formGroup]="addSectionForm">

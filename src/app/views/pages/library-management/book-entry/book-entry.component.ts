@@ -18,6 +18,7 @@ export class BookEntryComponent implements OnInit {
   addBookForm: FormGroup;
   flag = true;
   submitted = false;
+  isView: boolean = false;
   DeleteRecord = {
     BookID: null
   }
@@ -58,23 +59,24 @@ export class BookEntryComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
-    this.isOnEdit = false;
     if (type == 'new') {
+      this.isOnEdit = false;
+      this.isView = false;
       this, this.addBookForm.enable();
       this.addBookForm.reset();
-      this.isOnEdit = false;
       const formControl = this.addBookForm.get('BookID');
       if (formControl) {
         this.addBookForm.removeControl('BookID');
       }
     }
     if (type == 'edit') {
-
       this.isOnEdit = true;
+      this.isView = false;
       this.addBookForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
+      this.isView = true;
       this.addBookForm.disable();
     }
   }
@@ -155,15 +157,17 @@ export class BookEntryComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.BookID = id;
-    this.apiService.bookService.deleteBook(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllBooks();
-      this.notification.create("success", "Success", "Book Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.BookID = id;
+      this.apiService.bookService.deleteBook(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllBooks();
+        this.notification.create("success", "Success", "Book Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "Book Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "Book Record Deletion Failed")
+      })
+    }
   }
 
 
@@ -218,15 +222,15 @@ export class BookEntryComponent implements OnInit {
         }
       ]
     });
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
-   // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
+    // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
     $('div.dt-buttons span').addClass('text');
 

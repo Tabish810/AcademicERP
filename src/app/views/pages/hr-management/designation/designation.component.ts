@@ -18,6 +18,7 @@ export class DesignationComponent implements OnInit {
   addDesignationForm: FormGroup;
   flag = true;
   submitted = false;
+  isView: boolean = false;
   DeleteRecord = {
     DesignationID: null
   }
@@ -47,9 +48,9 @@ export class DesignationComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
-    this.isOnEdit = false;
     if (type == 'new') {
       this.isOnEdit = false;
+      this.isView = false;
       this, this.addDesignationForm.enable();
       this.addDesignationForm.reset();
       const formControl = this.addDesignationForm.get('DesignationID');
@@ -59,10 +60,12 @@ export class DesignationComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
+      this.isView = false;
       this, this.addDesignationForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
+      this.isView = true;
       this.addDesignationForm.disable();
     }
   }
@@ -113,7 +116,6 @@ export class DesignationComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.DesignationID = id;
@@ -126,7 +128,6 @@ export class DesignationComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.designationService.getDesignationById(id).subscribe((res: any) => {
       this.singleDesignation = res.Table[0];
@@ -138,15 +139,17 @@ export class DesignationComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.DesignationID = id;
-    this.apiService.designationService.deleteDesignation(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllCity();
-      this.notification.create("success", "Success", "Designation Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.DesignationID = id;
+      this.apiService.designationService.deleteDesignation(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllCity();
+        this.notification.create("success", "Success", "Designation Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "Designation Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "Designation Record Deletion Failed")
+      })
+    }
   }
 
 
@@ -211,15 +214,15 @@ export class DesignationComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
     // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
-     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
-     $('div.dt-buttons span').addClass('text');
- 
-     // Buttons
-     $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right", "10px");
-     $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right", "10px");;
-     $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right", "10px");;
-     $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right", "10px");;
- 
+    //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
+    $('div.dt-buttons span').addClass('text');
+
+    // Buttons
+    $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right", "10px");
+    $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right", "10px");;
+
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');

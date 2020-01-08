@@ -24,6 +24,7 @@ export class FeesDiscountComponent implements OnInit {
   UpdateRecord = {
     RowUID: null
   }
+  isView : boolean = false;
   singleFeesDiscount;
   constructor(private notification: NzNotificationService, private formBuilder: FormBuilder, private httpClient: HttpClient, private chRef: ChangeDetectorRef, private apiService: ApiServiceService) { }
 
@@ -63,12 +64,19 @@ export class FeesDiscountComponent implements OnInit {
       if (formControl) {
         this.addFeesDiscount.removeControl('RowUID');
       }
+      this.isView = false;
+      this.isOnEdit = false;
+      this.addFeesDiscount.enable();
     }
     if (type == 'edit') {
-
+      this.isOnEdit = true;
+      this.isView = false;
+      this.addFeesDiscount.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
+      this.addFeesDiscount.disable();
     }
   }
   hideModal() {
@@ -118,7 +126,6 @@ export class FeesDiscountComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.RowUID = id;
@@ -132,7 +139,6 @@ export class FeesDiscountComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     this.addFeesDiscount.disable();
     console.log("view ID", id);
     this.apiService.fessDiscountService.getFeesDiscountById(id).subscribe((res: any) => {
@@ -142,19 +148,19 @@ export class FeesDiscountComponent implements OnInit {
       this.addFeesDiscount.patchValue(this.singleFeesDiscount)
     })
     this.showModal('view')
-    
+
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.RowUID = id;
-    this.apiService.fessDiscountService.deleteFeesDiscount(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllDiscount();
-      this.notification.create("success", "Success", "Discount Record Deleted Successfully")
-
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Discount Record Deletion Failed")
-    })
+    if (confirm("Are You sure ?")) {
+      this.DeleteRecord.RowUID = id;
+      this.apiService.fessDiscountService.deleteFeesDiscount(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllDiscount();
+        this.notification.create("success", "Success", "Discount Record Deleted Successfully")
+      }, (err) => {
+        this.notification.create("error", "Failed", "Discount Record Deletion Failed")
+      })
+    }
   }
   DataTablesFunctionCallAfterDataInit() {
     if (!this.flag) {
@@ -204,15 +210,15 @@ export class FeesDiscountComponent implements OnInit {
         }
       ]
     });
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
-   // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
+    // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
     $('div.dt-buttons span').addClass('text');
 

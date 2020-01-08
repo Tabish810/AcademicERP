@@ -17,6 +17,7 @@ export class HostelsComponent implements OnInit {
   isVisible = false;
   isOnEdit = false;
   dataTable: any;
+  isView : boolean = false;
   allMaster;
   allRoomType;
   addHostelForm: FormGroup;
@@ -64,18 +65,20 @@ export class HostelsComponent implements OnInit {
       this.DataTablesFunctionCallAfterDataInit();
     })
   }
-getAllMaster(){
-  this.apiService.employeeService.getAllEmployee().subscribe((res:any)=>{
-    this.allMaster=res;
-    console.log("Masters",this.allMaster);
-    
-  })
-}
+  getAllMaster() {
+    this.apiService.employeeService.getAllEmployee().subscribe((res: any) => {
+      this.allMaster = res;
+      console.log("Masters", this.allMaster);
+
+    })
+  }
 
   showModal(type) {
     this.isVisible = true;
     if (type == 'new') {
-      this, this.addHostelForm.enable();
+      this.isOnEdit = false;
+      this.isView = false;
+      this.addHostelForm.enable();
       this.addHostelForm.reset();
       const formControl = this.addHostelForm.get('HouseID');
       if (formControl) {
@@ -83,11 +86,13 @@ getAllMaster(){
       }
     }
     if (type == 'edit') {
-
-      this, this.addHostelForm.enable();
+      this.isOnEdit = true;
+      this.isView = false;
+      this.addHostelForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
       this.addHostelForm.disable();
     }
   }
@@ -138,7 +143,6 @@ getAllMaster(){
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.HouseID = id;
@@ -151,7 +155,6 @@ getAllMaster(){
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.hostelService.getHostelById(id).subscribe((res: any) => {
       this.singleHostel = res.Table[0];
@@ -163,15 +166,17 @@ getAllMaster(){
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.HouseID = id;
-    this.apiService.hostelService.deleteHostel(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllHostel();
-      this.notification.create("success", "Success", "Hostel Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.HouseID = id;
+      this.apiService.hostelService.deleteHostel(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllHostel();
+        this.notification.create("success", "Success", "Hostel Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "Hostel Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "Hostel Record Deletion Failed")
+      })
+    }
   }
 
 

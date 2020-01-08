@@ -18,6 +18,7 @@ export class EventAwardsComponent implements OnInit {
   isOnEdit = false;
   dataTable: any;
   addAwardForm: FormGroup;
+  isView : boolean = true;
   flag = true;
   submitted = false;
   DeleteRecord = {
@@ -49,9 +50,10 @@ export class EventAwardsComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
-    this.isOnEdit = false;
+
     if (type == 'new') {
       this.isOnEdit = false;
+      this.isView = false;
      this.addAwardForm.enable();
       this.addAwardForm.reset();
       const formControl = this.addAwardForm.get('AwardID');
@@ -61,10 +63,12 @@ export class EventAwardsComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
+      this.isView = false;
      this.addAwardForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
+      this.isView = true;
       this.addAwardForm.disable();
     }
   }
@@ -138,15 +142,16 @@ export class EventAwardsComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.AwardID = id;
-    this.apiService.eventAwardsService.deleteEventAwards(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllCity();
-      this.notification.create("success", "Success", "Award Record Deleted Successfully")
-
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Award Record Deletion Failed")
-    })
+    if(confirm("Are you sure ?")){
+      this.DeleteRecord.AwardID = id;
+      this.apiService.eventAwardsService.deleteEventAwards(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllCity();
+        this.notification.create("success", "Success", "Award Record Deleted Successfully")
+      }, (err) => {
+        this.notification.create("error", "Failed", "Award Record Deletion Failed")
+      })
+    }
+   
   }
 
 

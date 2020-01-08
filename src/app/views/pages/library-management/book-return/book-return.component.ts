@@ -20,6 +20,7 @@ export class BookReturnComponent implements OnInit {
   addReturnBookForm: FormGroup;
   flag = true;
   submitted = false;
+  isView: boolean = false;
   DeleteRecord = {
     ReturnID: null
   }
@@ -60,9 +61,10 @@ export class BookReturnComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
-    this.isOnEdit = false;
     if (type == 'new') {
-      this, this.addReturnBookForm.enable();
+      this.isOnEdit = false;
+      this.isView = false;
+      this.addReturnBookForm.enable();
       this.addReturnBookForm.reset();
       const formControl = this.addReturnBookForm.get('ReturnID');
       if (formControl) {
@@ -71,11 +73,12 @@ export class BookReturnComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
-      this, this.addReturnBookForm.enable();
+      this.isView = false;
+      this.addReturnBookForm.enable();
     }
     if (type == 'view') {
-
       this.isOnEdit = false;
+      this.isView = true;
       this.addReturnBookForm.disable();
     }
   }
@@ -149,15 +152,15 @@ export class BookReturnComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.ReturnID = id;
-    this.apiService.bookReturnService.deleteBookReturn(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllIssueBooks();
-      this.notification.create("success", "Success", "Return Books Record Deleted Successfully")
-
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Return Books Record Deletion Failed")
-    })
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.ReturnID = id;
+      this.apiService.bookReturnService.deleteBookReturn(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllIssueBooks();
+        this.notification.create("success", "Success", "Return Books Record Deleted Successfully")
+      }, (err) => {
+        this.notification.create("error", "Failed", "Return Books Record Deletion Failed")
+      })
+    }
   }
 
 
@@ -213,24 +216,24 @@ export class BookReturnComponent implements OnInit {
       ]
     });
 
-     // tslint:disable-next-line:max-line-length
-     $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
-     // tslint:disable-next-line:max-line-length
-     $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
-     // tslint:disable-next-line:max-line-length
-     $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
-     // tslint:disable-next-line:max-line-length
-     $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
-     // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
-      //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
-      $('div.dt-buttons span').addClass('text');
-  
-      // Buttons
-      $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right", "10px");
-      $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right", "10px");;
-      $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right", "10px");;
-      $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right", "10px");;
-  
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
+    // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
+    //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
+    $('div.dt-buttons span').addClass('text');
+
+    // Buttons
+    $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right", "10px");
+    $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right", "10px");;
+
 
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');

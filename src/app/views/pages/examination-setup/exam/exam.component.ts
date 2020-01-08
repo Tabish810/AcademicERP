@@ -17,6 +17,7 @@ export class ExamComponent implements OnInit {
   isVisible = false;
   isOnEdit = false;
   dataTable: any;
+  isView: boolean = false;
   addExamForm: FormGroup;
   flag = true;
   submitted = false;
@@ -32,7 +33,7 @@ export class ExamComponent implements OnInit {
 
   ngOnInit() {
     this.addExamForm = this.formBuilder.group({
-      ExamNo: new FormControl(name, Validators.required),
+      ExamCode: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
       IsActive: new FormControl(name)
     });
@@ -50,7 +51,11 @@ export class ExamComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
+    this.isOnEdit = false;
+    this.isView = false;
     if (type == 'new') {
+      this.isView = false;
+      this.isOnEdit = false;
       this.addExamForm.reset();
       const formControl = this.addExamForm.get('ExamID');
       if (formControl) {
@@ -58,10 +63,14 @@ export class ExamComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
+      this.isOnEdit = true;
+      this.isView = false;
+      this.addExamForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
+      this.addExamForm.disable();
     }
   }
   hideModal() {
@@ -111,7 +120,6 @@ export class ExamComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.ExamID = id;
@@ -125,7 +133,6 @@ export class ExamComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     this.addExamForm.disable();
     console.log("view ID", id);
     this.apiService.examService.getExamById(id).subscribe((res: any) => {
@@ -138,22 +145,17 @@ export class ExamComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.ExamID = id;
-    this.apiService.examService.deleteExam(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllExam();
-      this.notification.create("success", "Success", "Exam Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.ExamID = id;
+      this.apiService.examService.deleteExam(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllExam();
+        this.notification.create("success", "Success", "Exam Record Deleted Successfully")
 
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Exam Record Deletion Failed")
-    })
+      }, (err) => {
+        this.notification.create("error", "Failed", "Exam Record Deletion Failed")
+      })
+    }
   }
-
-
-
-
-
-
 
   DataTablesFunctionCallAfterDataInit() {
     if (!this.flag) {

@@ -67,7 +67,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add Designation
+        <span *ngIf="!isOnEdit && !isView">
+            Add Designation
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Designation
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addDesignationForm">

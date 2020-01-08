@@ -15,11 +15,12 @@ export class ClassComponent implements OnInit {
   addclassForm: FormGroup;
   allClasses;
   isOnEdit = false;
+  isOnView = false;
   dataTable: any;
   flag = true;
   submitted = false;
   allSection: any;
-
+  checkModalTitle: any = 1;
   section;
   class = {
     ClassName: null,
@@ -50,7 +51,7 @@ export class ClassComponent implements OnInit {
       name: new FormControl(name, Validators.required),
       classcode: new FormControl(name, [Validators.required, Validators.minLength(4)]),
       section: new FormControl(name, Validators.required),
-      IsActive : new FormControl(name)
+      IsActive: new FormControl(name)
     });
 
     this.getAllSection();
@@ -91,8 +92,6 @@ export class ClassComponent implements OnInit {
           this.addclassForm.reset();
           this.notification.create("error", "Failed", "Class Adding Failed")
         }
-
-
         )
       } else {
         this.updateClass.ClassCode = this.addclassForm.get('classcode').value;
@@ -112,7 +111,6 @@ export class ClassComponent implements OnInit {
 
         }, (err) => {
           this.isVisible = false;
-
           this.addclassForm.reset();
           this.notification.create("error", "Failed", "Class udpating Failed")
 
@@ -120,14 +118,11 @@ export class ClassComponent implements OnInit {
       }
     }
 
-
-
-
   }
 
   editClass(id) {
-
     this.isOnEdit = true;
+    this.isOnView = false;
     this.showModal();
     let c;
     c = this.allClasses.filter(x => x.ClassID == id);
@@ -138,12 +133,21 @@ export class ClassComponent implements OnInit {
       console.log("Field 1", c[0].ClassName)
       console.log("Field 1", c[0].SectionNo)
       this.ClassID = c[0].ClassID;
-      this.addclassForm.setValue({ name: c[0].ClassName, classcode: c[0].ClassCode, section: c[0].SectionNo })
+      this.addclassForm.setValue({ name: c[0].ClassName, classcode: c[0].ClassCode, section: c[0].SectionNo, IsActive: c[0].IsActive })
       this.addclassForm.enable();
     }
   }
-  ViewClass(id) {
+  showAddModal(){
+    this.isOnView = false;
+    this.isOnEdit = false;
     this.showModal();
+  }
+  ViewClass(id) {
+    this.isOnView = true;
+    this.isOnEdit = false;
+    this.showModal();
+    this.checkModalTitle = 3;
+    this.isOnView = true;
     let c;
     c = this.allClasses.filter(x => x.ClassID == id);
     console.log("Seleted row data ", c);
@@ -152,27 +156,26 @@ export class ClassComponent implements OnInit {
       console.log("Field 1", c[0].ClassCode)
       console.log("Field 1", c[0].ClassName)
       console.log("Field 1", c[0].SectionNo)
-      this.addclassForm.setValue({ name: c[0].ClassName, classcode: c[0].ClassCode, section: c[0].SectionNo })
+      this.addclassForm.setValue({ name: c[0].ClassName, classcode: c[0].ClassCode, section: c[0].SectionNo, IsActive: c[0].IsActive })
       this.addclassForm.disable();
     }
   }
   deleteClass(id) {
     console.log("Class id to delete", id)
+    if (confirm("Are you sure ?")) {
+      this.DeleteClass.ClassID = id;
+      if (id != null || id != undefined) {
+        this.apiService.classService.deleteClass(this.DeleteClass).subscribe((res: any) => {
+          this.getAllSection();
+          this.getAllClass();
+          this.notification.create("success", "Deleted", "Class Deleted Successfully");
 
-    this.DeleteClass.ClassID = id;
-    if (id != null || id != undefined) {
-
-
-      this.apiService.classService.deleteClass(this.DeleteClass).subscribe((res: any) => {
-        this.getAllSection();
-        this.getAllClass();
-        this.notification.create("success", "Deleted", "Class Deleted Successfully");
-
-      }, (err) => {
-        this.notification.create("error", "Failed", "Class Deleting Failed")
-
-      })
+        }, (err) => {
+          this.notification.create("error", "Failed", "Class Deleting Failed")
+        })
+      }
     }
+
   }
   onReset() {
     this.submitted = false;
@@ -183,10 +186,8 @@ export class ClassComponent implements OnInit {
     this.isVisible = true;
   }
   hideModal() {
-
     this.addclassForm.reset();
     this.isVisible = false;
-
   }
 
   handleOk(): void {

@@ -18,6 +18,7 @@ export class ExamGradeComponent implements OnInit {
   dataTable: any;
   addGradeForm: FormGroup;
   flag = true;
+  isView : boolean = false;
   submitted = false;
   DeleteRecord = {
     ExamGradeID: null
@@ -50,20 +51,26 @@ export class ExamGradeComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
+    this.isOnEdit = false;
+    this.isView = false;
     if (type == 'new') {
+      this.isView = false;
+      this.isOnEdit = false;
       this.addGradeForm.reset();
-      this, this.addGradeForm.enable();
+      this.addGradeForm.enable();
       const formControl = this.addGradeForm.get('ExamGradeID');
       if (formControl) {
         this.addGradeForm.removeControl('ExamGradeID');
       }
     }
     if (type == 'edit') {
-
-      this, this.addGradeForm.enable();
+      this.isOnEdit = true;
+      this.isView = false;
+      this.addGradeForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
       this.addGradeForm.disable();
     }
   }
@@ -114,7 +121,6 @@ export class ExamGradeComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.ExamGradeID = id;
@@ -127,7 +133,6 @@ export class ExamGradeComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.gradeService.getGradeById(id).subscribe((res: any) => {
       this.singleGrade = res.Table[0];
@@ -139,21 +144,18 @@ export class ExamGradeComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.ExamGradeID = id;
-    this.apiService.gradeService.deleteGrade(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllGrades();
-      this.notification.create("success", "Success", "Grade Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.ExamGradeID = id;
+      this.apiService.gradeService.deleteGrade(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllGrades();
+        this.notification.create("success", "Success", "Grade Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "Grade Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "Grade Record Deletion Failed")
+      })
+    }
   }
-
-
-
-
-
 
 
   DataTablesFunctionCallAfterDataInit() {

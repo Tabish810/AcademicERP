@@ -16,6 +16,7 @@ export class VehicleRouteComponent implements OnInit {
   isVisible = false;
   isOnEdit = false;
   dataTable: any;
+  isView: boolean = false;
   addRoutesForm: FormGroup;
   flag = true;
   submitted = false;
@@ -33,7 +34,7 @@ export class VehicleRouteComponent implements OnInit {
     this.addRoutesForm = this.formBuilder.group({
       VehicleRouteNo: new FormControl(name, Validators.required),
       FromLocation: new FormControl(name, Validators.required),
-      ToLocation: new FormControl(name,Validators.required),
+      ToLocation: new FormControl(name, Validators.required),
       Fare: new FormControl(name, Validators.required),
       IsActive: new FormControl(name)
     });
@@ -52,7 +53,8 @@ export class VehicleRouteComponent implements OnInit {
     this.isVisible = true;
     if (type == 'new') {
       this.isOnEdit = false;
-      this, this.addRoutesForm.enable();
+      this.isView = false;
+     this.addRoutesForm.enable();
       this.addRoutesForm.reset();
       const formControl = this.addRoutesForm.get('RouteID');
       if (formControl) {
@@ -60,11 +62,13 @@ export class VehicleRouteComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
-      this, this.addRoutesForm.enable();
+      this.isOnEdit = true;
+      this.isView = false;
+     this.addRoutesForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
       this.addRoutesForm.disable();
     }
   }
@@ -115,7 +119,6 @@ export class VehicleRouteComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.RouteID = id;
@@ -128,7 +131,6 @@ export class VehicleRouteComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.routeService.getRouteById(id).subscribe((res: any) => {
       this.singleRoute = res.Table[0];
@@ -139,16 +141,15 @@ export class VehicleRouteComponent implements OnInit {
     this.showModal('view')
   }
   deleteRecord(id) {
-    console.log("Delete ID", id);
-    this.DeleteRecord.RouteID = id;
-    this.apiService.routeService.deleteRoute(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllInstitute();
-      this.notification.create("success", "Success", "Route Record Deleted Successfully")
-
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Route Record Deletion Failed")
-    })
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.RouteID = id;
+      this.apiService.routeService.deleteRoute(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllInstitute();
+        this.notification.create("success", "Success", "Route Record Deleted Successfully")
+      }, (err) => {
+        this.notification.create("error", "Failed", "Route Record Deletion Failed")
+      })
+    }
   }
 
 
@@ -204,15 +205,15 @@ export class VehicleRouteComponent implements OnInit {
       ]
     });
 
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
-   // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
+    // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
     $('div.dt-buttons span').addClass('text');
 

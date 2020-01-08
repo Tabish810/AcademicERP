@@ -15,6 +15,7 @@ export class EventInfoComponent implements OnInit {
   allEvents;
   isVisible = false;
   isOnEdit = false;
+  isView: boolean = false;
   dataTable: any;
   addEventForm: FormGroup;
   flag = true;
@@ -49,10 +50,10 @@ export class EventInfoComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
-    this.isOnEdit = false;
     if (type == 'new') {
       this.isOnEdit = false;
-      this, this.addEventForm.enable();
+      this.isView = false;
+     this.addEventForm.enable();
       this.addEventForm.reset();
       const formControl = this.addEventForm.get('EventID');
       if (formControl) {
@@ -61,10 +62,12 @@ export class EventInfoComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
-      this, this.addEventForm.enable();
+      this.isView = false;
+     this.addEventForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
+      this.isView = true;
       this.addEventForm.disable();
     }
   }
@@ -115,7 +118,6 @@ export class EventInfoComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.EventID = id;
@@ -128,7 +130,6 @@ export class EventInfoComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.eventService.getEventById(id).subscribe((res: any) => {
       this.singleEvent = res.Table[0];
@@ -140,15 +141,15 @@ export class EventInfoComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.EventID = id;
-    this.apiService.eventService.deleteEvent(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllCity();
-      this.notification.create("success", "Success", "Event Record Deleted Successfully")
-
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Event Record Deletion Failed")
-    })
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.EventID = id;
+      this.apiService.eventService.deleteEvent(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllCity();
+        this.notification.create("success", "Success", "Event Record Deleted Successfully")
+      }, (err) => {
+        this.notification.create("error", "Failed", "Event Record Deletion Failed")
+      })
+    }
   }
 
 
@@ -216,12 +217,12 @@ export class EventInfoComponent implements OnInit {
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
     $('div.dt-buttons span').addClass('text');
 
-     // Buttons
-     $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right", "10px");
-     $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right", "10px");;
-     $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right", "10px");;
-     $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right", "10px");;
- 
+    // Buttons
+    $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right", "10px");
+    $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right", "10px");;
+
 
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');
     $('div.dt-buttons button:nth-child(1)').detach().appendTo('#destination');

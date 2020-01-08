@@ -23,7 +23,7 @@ export class SubjectComponent implements OnInit {
   classs = {
     ClassID: null
   }
-
+  isOnView = false;
   subject = {
     SubjectName: null,
     SubjectCode: null,
@@ -74,8 +74,11 @@ export class SubjectComponent implements OnInit {
 
   //View Subject
   ViewRecord(id) {
+    this.isOnView = false;
+    this.isOnEdit = false;
     this.showModal();
     let c;
+    this.isOnView = true;
     c = this.allSubject.filter(x => x.SubjectID == id);
     console.log("Seleted row data ", c);
     if (c != undefined || c != null) {
@@ -93,18 +96,19 @@ export class SubjectComponent implements OnInit {
   //Delete Subject
   deleteRecord(id) {
     console.log("Subject id to delete", id)
+    if (confirm("Are you sure ?")) {
+      this.DeleteSubject.SubjectID = id;
+      if (id != null || id != undefined) {
 
-    this.DeleteSubject.SubjectID = id;
-    if (id != null || id != undefined) {
+        this.apiService.subjectService.deleteSubject(this.DeleteSubject).subscribe((res: any) => {
+          this.getallSubject();
+          this.notification.create("success", "Deleted", "Subject Deleted Successfully");
 
-      this.apiService.subjectService.deleteSubject(this.DeleteSubject).subscribe((res: any) => {
-        this.getallSubject();
-        this.notification.create("success", "Deleted", "Subject Deleted Successfully");
+        }, (err) => {
+          this.notification.create("error", "Failed", "Subjcet Deleting Failed")
 
-      }, (err) => {
-        this.notification.create("error", "Failed", "Subjcet Deleting Failed")
-
-      })
+        })
+      }
     }
   }
 
@@ -123,6 +127,7 @@ export class SubjectComponent implements OnInit {
   editRecord(id) {
     this.addSubjectForm.enable();
     this.isOnEdit = true;
+    this.isOnView = false;
     this.showModal();
     let c;
     c = this.allSubject.filter(x => x.SubjectID == id);
@@ -192,6 +197,11 @@ export class SubjectComponent implements OnInit {
 
   showModal(): void {
     this.isVisible = true;
+  }
+  showAddModal(){
+    this.isOnView = false;
+    this.isOnEdit = false;
+    this.showModal();
   }
   hideModal() {
 

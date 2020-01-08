@@ -77,7 +77,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add Routes
+        <span *ngIf="!isOnEdit && !isView">
+            Add Assign Vehicle
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Assign Vehicle
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addasVehicleForm">

@@ -95,7 +95,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Event Schedule
+        <span *ngIf="!isOnEdit && !isView">
+            Add Event Schedule
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Event Schedule
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addEventScheduleForm">

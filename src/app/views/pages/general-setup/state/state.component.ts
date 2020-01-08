@@ -56,9 +56,13 @@ export class StateComponent implements OnInit {
     })
   }
 
+  isView : boolean = false;
   showModal(type) {
     this.isVisible = true;
+    this.isOnEdit = false;
     if (type == 'new') {
+      this.isView = false;
+      this.isOnEdit = false;
       this, this.addStateForm.enable();
       this.addStateForm.reset();
       const formControl = this.addStateForm.get('StateID');
@@ -67,11 +71,13 @@ export class StateComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
+      this.isOnEdit = true;
+      this.isView = false;
       this, this.addStateForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
       this.addStateForm.disable();
     }
   }
@@ -122,7 +128,6 @@ export class StateComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.StateID = id;
@@ -135,7 +140,6 @@ export class StateComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.stateService.getStateById(id).subscribe((res: any) => {
       this.singleState = res.Table[0];
@@ -147,15 +151,17 @@ export class StateComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.StateID = id;
-    this.apiService.stateService.deleteState(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllStates();
-      this.notification.create("success", "Success", "State Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.StateID = id;
+      this.apiService.stateService.deleteState(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllStates();
+        this.notification.create("success", "Success", "State Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "State Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "State Record Deletion Failed")
+      })
+    }
   }
 
 

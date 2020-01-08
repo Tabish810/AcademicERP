@@ -67,7 +67,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add Department
+        <span *ngIf="!isOnEdit && !isView">
+            Add Department
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Department
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addDepartForm">

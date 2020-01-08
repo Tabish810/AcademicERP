@@ -99,7 +99,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Submit Fees
+        <span *ngIf="!isOnEdit && !isView">
+            Add Fee
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Fee
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addFessForm">

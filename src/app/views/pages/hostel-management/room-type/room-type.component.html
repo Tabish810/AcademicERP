@@ -67,7 +67,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add Room Type
+        <span *ngIf="!isOnEdit && !isView">
+            Add Room Type
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Room Type
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addRoomTypeForm">

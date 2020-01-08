@@ -24,6 +24,7 @@ export class DepartmentComponent implements OnInit {
   UpdateRecord = {
     DepartmentID: null
   }
+  isView : boolean = false;
   singleDepart;
   constructor(private notification: NzNotificationService, private formBuilder: FormBuilder, private httpClient: HttpClient, private chRef: ChangeDetectorRef, private apiService: ApiServiceService) { }
 
@@ -47,10 +48,10 @@ export class DepartmentComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
-    this.isOnEdit = false;
     if (type == 'new') {
       this.isOnEdit = false;
-      this, this.addDepartForm.enable();
+      this.isView = false;
+      this.addDepartForm.enable();
       this.addDepartForm.reset();
       const formControl = this.addDepartForm.get('DepartmentID');
       if (formControl) {
@@ -59,10 +60,12 @@ export class DepartmentComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
-      this, this.addDepartForm.enable();
+      this.isView = false;
+      this.addDepartForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
+      this.isView = true;
       this.addDepartForm.disable();
     }
   }
@@ -113,7 +116,6 @@ export class DepartmentComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.DepartmentID = id;
@@ -126,7 +128,6 @@ export class DepartmentComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.departmentService.getDepartmentById(id).subscribe((res: any) => {
       this.singleDepart = res.Table[0];
@@ -138,15 +139,16 @@ export class DepartmentComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.DepartmentID = id;
-    this.apiService.departmentService.deleteDepartment(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllCity();
-      this.notification.create("success", "Success", "Department Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.DepartmentID = id;
+      this.apiService.departmentService.deleteDepartment(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllCity();
+        this.notification.create("success", "Success", "Department Record Deleted Successfully")
 
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Department Record Deletion Failed")
-    })
+      }, (err) => {
+        this.notification.create("error", "Failed", "Department Record Deletion Failed")
+      })
+    }
   }
 
 
@@ -201,15 +203,15 @@ export class DepartmentComponent implements OnInit {
         }
       ]
     });
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
-   // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
+    // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
     $('div.dt-buttons span').addClass('text');
 

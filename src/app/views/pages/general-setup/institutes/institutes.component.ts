@@ -22,6 +22,7 @@ export class InstitutesComponent implements OnInit {
   DeleteRecord = {
     InstitueID: null
   }
+  isView : boolean = false;
   UpdateRecord = {
     InstitueID: null
   }
@@ -61,7 +62,9 @@ export class InstitutesComponent implements OnInit {
   showModal(type) {
     this.isVisible = true;
     this.isOnEdit = false;
+    this.isView = false;
     if (type == 'new') {
+      this.isView = false;
       this.isOnEdit = false;
       this.addInstituteForm.enable();
       this.addInstituteForm.reset();
@@ -72,10 +75,12 @@ export class InstitutesComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
+      this.isView = false;
       this.addInstituteForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
+      this.isView = true;
       this.addInstituteForm.disable();
     }
   }

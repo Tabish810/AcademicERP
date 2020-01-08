@@ -69,7 +69,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add City
+        <span *ngIf="!isOnEdit && !isView">
+            Add City
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update City
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addCityForm">
