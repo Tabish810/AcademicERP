@@ -18,6 +18,7 @@ export class EventAwardsComponent implements OnInit {
   isOnEdit = false;
   dataTable: any;
   addAwardForm: FormGroup;
+  isView : boolean = true;
   flag = true;
   submitted = false;
   DeleteRecord = {
@@ -34,7 +35,7 @@ export class EventAwardsComponent implements OnInit {
     this.addAwardForm = this.formBuilder.group({
       AwardNo: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllCity();
   }
@@ -49,10 +50,11 @@ export class EventAwardsComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
-    this.isOnEdit = false;
+
     if (type == 'new') {
       this.isOnEdit = false;
-      this, this.addAwardForm.enable();
+      this.isView = false;
+     this.addAwardForm.enable();
       this.addAwardForm.reset();
       const formControl = this.addAwardForm.get('AwardID');
       if (formControl) {
@@ -61,10 +63,12 @@ export class EventAwardsComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
-      this, this.addAwardForm.enable();
+      this.isView = false;
+     this.addAwardForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
+      this.isView = true;
       this.addAwardForm.disable();
     }
   }
@@ -115,7 +119,6 @@ export class EventAwardsComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.AwardID = id;
@@ -128,7 +131,6 @@ export class EventAwardsComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.eventAwardsService.getEventAwardsById(id).subscribe((res: any) => {
       this.singleDepart = res.Table[0];
@@ -140,15 +142,16 @@ export class EventAwardsComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.AwardID = id;
-    this.apiService.eventAwardsService.deleteEventAwards(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllCity();
-      this.notification.create("success", "Success", "Award Record Deleted Successfully")
-
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Award Record Deletion Failed")
-    })
+    if(confirm("Are you sure ?")){
+      this.DeleteRecord.AwardID = id;
+      this.apiService.eventAwardsService.deleteEventAwards(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllCity();
+        this.notification.create("success", "Success", "Award Record Deleted Successfully")
+      }, (err) => {
+        this.notification.create("error", "Failed", "Award Record Deletion Failed")
+      })
+    }
+   
   }
 
 

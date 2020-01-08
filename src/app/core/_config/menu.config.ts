@@ -918,7 +918,7 @@ export class MenuConfig {
 					title: 'General Setup',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon2-list-2',
+					icon: 'flaticon-cogwheel-2',
 					submenu: [
 						{
 							title: 'Institutes',

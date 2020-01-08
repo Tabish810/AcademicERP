@@ -80,7 +80,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add new Routes
+        <span *ngIf="!isOnEdit && !isView">
+            Add Route
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Route
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addRoutesForm">
@@ -106,6 +114,13 @@
                     <mat-form-field class="example-full-width">
                         <input type="number" formControlName="Fare" matInput placeholder="Fare">
                     </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                        Active
+                    </mat-slide-toggle>
                 </div>
             </div>
             <!-- <mat-select [(value)]="selected"></mat-select> -->

@@ -21,8 +21,8 @@
         <thead>
             <tr>
                 <th>S# </th>
-                <th>SubjectNo</th>
-                <th>BookID</th>
+                <th>Subject No</th>
+                <th>Book ID</th>
                 <th>Issue To</th>
                 <th>Issue Date</th>
                 <th>Return Date</th>
@@ -35,7 +35,7 @@
             <tr class="odd" role="row" *ngFor="let bookIssue of allIssueBooks; let i = index;">
                 <td>{{i + 1}}</td>
                 <td>{{bookIssue.SubjectNo}}</td>
-                <td>{{bookIssue.BookID}}</td>
+                <td>{{bookIssue.BookNo}}</td>
                 <td>{{bookIssue.IssueTo}}</td>
                 <td>{{bookIssue.IssueDate | date}}</td>
                 <td>{{bookIssue.EpectedReturn | date}}</td>
@@ -85,19 +85,32 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Issue Book
+        <span *ngIf="!isOnEdit && !isView">
+            Add Book Issue
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Book Issue
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addIssueBookForm">
             <div class="row">
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input formControlName="SubjectNo" matInput placeholder="Subject Code">
+                        <mat-select formControlName="SubjectNo" placeholder="Select Subject">
+                            <mat-option selected value="'null'">Select Subject</mat-option>
+                            <mat-option [value]="sub.SubjectCode" *ngFor="let sub of allSubject">
+                                {{sub.SubjectName}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input formControlName="BookID" matInput placeholder="Book id">
+                        <input formControlName="BookID" matInput placeholder="Book Id">
                     </mat-form-field>
                 </div>
             </div>
@@ -128,6 +141,13 @@
                     <mat-form-field class="example-full-width">
                         <input formControlName="IssuedBy" matInput placeholder="Issued By">
                     </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                        Active
+                    </mat-slide-toggle>
                 </div>
             </div>
         </form>

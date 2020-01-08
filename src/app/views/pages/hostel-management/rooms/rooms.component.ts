@@ -17,6 +17,7 @@ export class RoomsComponent implements OnInit {
   addRoom: FormGroup;
   isVisible = false;
   isOnEdit = false;
+  isView: boolean = false;
   dataTable: any;
   flag = true;
   submitted = false;
@@ -38,19 +39,30 @@ export class RoomsComponent implements OnInit {
       TotalBeds: new FormControl(name),
       Price: new FormControl(name, Validators.required),
       Description: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
+    this.getData();
+  }
+
+  getData(){
     this.getAllRoomType();
     this.getAllRooms();
+    this.getAllHostel();
   }
   getAllRooms() {
     this.apiService.roomService.getAllRooms().subscribe((res: any) => {
       this.allRooms = res;
       console.log("All Rooms", this.allRooms);
-
       this.DataTablesFunctionCallAfterDataInit();
     })
-
+  }
+  allHostels;
+  getAllHostel() {
+    this.apiService.hostelService.getAllHostels().subscribe(res => {
+      this.allHostels = res;
+      console.log("All Hostel", this.allHostels);
+      this.DataTablesFunctionCallAfterDataInit();
+    })
   }
   getAllRoomType() {
     this.apiService.roomTypeService.getAllRoomTypes().subscribe((res: any) => {
@@ -64,6 +76,8 @@ export class RoomsComponent implements OnInit {
   showModal(type) {
     this.isVisible = true;
     if (type == 'new') {
+      this.isOnEdit = false;
+      this.isView = false;
       this.addRoom.reset();
       const formControl = this.addRoom.get('HouseRoomID');
       if (formControl) {
@@ -71,10 +85,14 @@ export class RoomsComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
+      this.isOnEdit = true;
+      this.isView = false;
+      this.addRoom.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
+      this.addRoom.disable();
     }
   }
   hideModal() {
@@ -124,7 +142,6 @@ export class RoomsComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.HouseRoomID = id;
@@ -138,7 +155,6 @@ export class RoomsComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     this.addRoom.disable();
     console.log("view ID", id);
     this.apiService.roomService.getRoomById(id).subscribe((res: any) => {
@@ -151,15 +167,15 @@ export class RoomsComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.HouseRoomID = id;
-    this.apiService.roomService.deleteRoom(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllRooms();
-      this.notification.create("success", "Success", "Room Record Deleted Successfully")
-
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Room Record Deletion Failed")
-    })
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.HouseRoomID = id;
+      this.apiService.roomService.deleteRoom(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllRooms();
+        this.notification.create("success", "Success", "Room Record Deleted Successfully")
+      }, (err) => {
+        this.notification.create("error", "Failed", "Room Record Deletion Failed")
+      })
+    }
   }
   DataTablesFunctionCallAfterDataInit() {
     if (!this.flag) {

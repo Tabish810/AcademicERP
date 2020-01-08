@@ -15,6 +15,7 @@ export class EventScheduleComponent implements OnInit {
   allEventSchedule;
   isVisible = false;
   isOnEdit = false;
+  isView: boolean = false;
   dataTable: any;
   addEventScheduleForm: FormGroup;
   flag = true;
@@ -44,7 +45,7 @@ export class EventScheduleComponent implements OnInit {
       AwardNo: new FormControl(name),
       EventIncharge: new FormControl(name, Validators.required),
       Description: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getallEventSchedule();
   }
@@ -71,10 +72,10 @@ export class EventScheduleComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
-    this.isOnEdit = false;
     if (type == 'new') {
       this.isOnEdit = false;
-      this, this.addEventScheduleForm.enable();
+      this.isView = false;
+      this.addEventScheduleForm.enable();
       this.addEventScheduleForm.reset();
       const formControl = this.addEventScheduleForm.get('EventScheduleID');
       if (formControl) {
@@ -83,10 +84,12 @@ export class EventScheduleComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
-      this, this.addEventScheduleForm.enable();
+      this.isView = false;
+      this.addEventScheduleForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
+      this.isView = true;
       this.addEventScheduleForm.disable();
     }
   }
@@ -105,7 +108,6 @@ export class EventScheduleComponent implements OnInit {
     this.addEventScheduleForm.reset();
   }
   onSave() {
-
     let dfrom = this.addEventScheduleForm.get("DateFrom").value
     dfrom = new Date(dfrom).toISOString().split('T')[0];
     this.addEventScheduleForm.controls['DateFrom'].patchValue(dfrom);
@@ -163,7 +165,6 @@ export class EventScheduleComponent implements OnInit {
   }
 
   editRecord(id) {
-
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.EventScheduleID = id;
@@ -196,15 +197,15 @@ export class EventScheduleComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.EventScheduleID = id;
-    this.apiService.eventScheduleService.deleteEventSchedule(this.DeleteRecord).subscribe((res: any) => {
-      this.getallEventSchedule();
-      this.notification.create("success", "Success", "Event Schedule Record Deleted Successfully")
-
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Event Schedule Record Deletion Failed")
-    })
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.EventScheduleID = id;
+      this.apiService.eventScheduleService.deleteEventSchedule(this.DeleteRecord).subscribe((res: any) => {
+        this.getallEventSchedule();
+        this.notification.create("success", "Success", "Event Schedule Record Deleted Successfully")
+      }, (err) => {
+        this.notification.create("error", "Failed", "Event Schedule Record Deletion Failed")
+      })
+    }
   }
 
 

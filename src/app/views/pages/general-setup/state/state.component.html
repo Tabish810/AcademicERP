@@ -71,27 +71,34 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add new State
+        <span *ngIf="!isOnEdit && !isView">
+            Add State
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update State
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addStateForm">
             <!-- <mat-select [(value)]="selected"></mat-select> -->
             <div class="row">
                 <div class="col-md-6">
-                    <mat-form-field  class="example-full-width">
-                        <input formControlName="Name" matInput placeholder="State Name">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="StateCode" type="text" placeholder="State Code">
                     </mat-form-field>
                 </div>
                 <div class="col-md-6">
-                    <mat-form-field  class="example-full-width">
-                        <input matInput formControlName="StateCode" type="text" placeholder="State Code">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="Name" matInput placeholder="State Name">
                     </mat-form-field>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <mat-form-field  class="example-full-width">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
                         <mat-label>Select Country</mat-label>
                         <mat-select formControlName="CountrNo">
                             <mat-option [value]="ct.CountryCode" *ngFor="let ct of allCountries">
@@ -101,7 +108,11 @@
                     </mat-form-field>
 
                 </div>
-                <div class="col-md-4"></div>
+                <div class="col-md-6 p-3">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" name="isactive" color="primary">
+                        Active
+                    </mat-slide-toggle>
+                </div>
             </div>
 
 

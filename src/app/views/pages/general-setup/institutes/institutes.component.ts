@@ -14,6 +14,7 @@ export class InstitutesComponent implements OnInit {
   allInstitutes;
   isVisible = false;
   isOnEdit = false;
+  checked = false;
   dataTable: any;
   addInstituteForm: FormGroup;
   flag = true;
@@ -21,13 +22,12 @@ export class InstitutesComponent implements OnInit {
   DeleteRecord = {
     InstitueID: null
   }
+  isView : boolean = false;
   UpdateRecord = {
     InstitueID: null
   }
   singleExam;
   constructor(private notification: NzNotificationService, private formBuilder: FormBuilder, private httpClient: HttpClient, private chRef: ChangeDetectorRef, private apiService: ApiServiceService) { }
-
-
   ngOnInit() {
     this.addInstituteForm = this.formBuilder.group({
       InstituteCode: new FormControl(name, Validators.required),
@@ -46,7 +46,7 @@ export class InstitutesComponent implements OnInit {
       CityNo: new FormControl(name, Validators.required),
       PostalCode: new FormControl(name, Validators.required),
       Address: new FormControl(name),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllInstitute();
   }
@@ -61,8 +61,12 @@ export class InstitutesComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
+    this.isOnEdit = false;
+    this.isView = false;
     if (type == 'new') {
-      this, this.addInstituteForm.enable();
+      this.isView = false;
+      this.isOnEdit = false;
+      this.addInstituteForm.enable();
       this.addInstituteForm.reset();
       const formControl = this.addInstituteForm.get('InstitueID');
       if (formControl) {
@@ -70,11 +74,13 @@ export class InstitutesComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
-      this, this.addInstituteForm.enable();
+      this.isOnEdit = true;
+      this.isView = false;
+      this.addInstituteForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
       this.addInstituteForm.disable();
     }
   }
@@ -111,7 +117,6 @@ export class InstitutesComponent implements OnInit {
 
       this.apiService.instituteService.updateInstitute(this.addInstituteForm.value).subscribe((res: any) => {
         this.addInstituteForm.removeControl('InstitueID');
-
         this.getAllInstitute();
         this.isVisible = false;
         this.notification.create("success", "Success", "Exam Updated Successfully")
@@ -126,7 +131,6 @@ export class InstitutesComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.InstitueID = id;
@@ -139,7 +143,6 @@ export class InstitutesComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.instituteService.getInstituteById(id).subscribe((res: any) => {
       this.singleExam = res.Table[0];
@@ -151,15 +154,18 @@ export class InstitutesComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.InstitueID = id;
-    this.apiService.instituteService.deleteInstitute(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllInstitute();
-      this.notification.create("success", "Success", "Exam Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.InstitueID = id;
+      this.apiService.instituteService.deleteInstitute(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllInstitute();
+        this.notification.create("success", "Success", "Exam Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "Exam Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "Exam Record Deletion Failed")
+      })
+    }
+
   }
   DataTablesFunctionCallAfterDataInit() {
     if (!this.flag) {

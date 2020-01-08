@@ -4,7 +4,8 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
+        <button nz-button [nzType]="'primary'" (click)="showModal('new')"><span><i
+                    class="fa fa-plus"></i>&nbsp;&nbsp;Add New</span></button>
     </div>
 </div>
 <div class="row mb-3 btn-ops-bg">
@@ -20,8 +21,8 @@
         <thead>
             <tr>
                 <th>S# </th>
-                <th>City Name</th>
                 <th>City Code</th>
+                <th>City Name</th>
                 <th>State Code</th>
                 <th>Action</th>
                 <!-- <th class="not-export-col">Actions</th> -->
@@ -30,9 +31,9 @@
         <tbody class="FontSizeTable">
             <tr class="odd" role="row" *ngFor="let city of allCities; let i = index;">
                 <td>{{i + 1}}</td>
-                <td>{{city.Name}}</td>
                 <td>{{city.CityCode}}</td>
-                <td>{{city.CountrNo}}</td>
+                <td>{{city.Name}}</td>
+                <td>{{city.StateNo}}</td>
                 <th>
                     <ng-container matColumnDef="actions">
                         <mat-cell>
@@ -68,27 +69,49 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add new City
+        <span *ngIf="!isOnEdit && !isView">
+            Add City
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update City
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addCityForm">
             <!-- <mat-select [(value)]="selected"></mat-select> -->
-            <mat-form-field>
-                <input formControlName="Name" matInput placeholder="City Name">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput formControlName="CityCode" type="text" placeholder="City Code">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Select State</mat-label>
-                <mat-select formControlName="StateNo">
-                    <mat-option [value]="st.StateCode" *ngFor="let st of allStates">
-                        {{st.Name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput formControlName="CityCode" type="text" placeholder="City Code">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="Name" matInput placeholder="City Name">
+                    </mat-form-field>
 
-
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Select State</mat-label>
+                        <mat-select formControlName="StateNo">
+                            <mat-option [value]="st.StateCode" *ngFor="let st of allStates">
+                                {{st.Name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6 p-3">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                        Active
+                    </mat-slide-toggle>
+                </div>
+            </div>
         </form>
     </ng-template>
     <ng-template #modalFooter>

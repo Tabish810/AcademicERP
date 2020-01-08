@@ -4,7 +4,7 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+        <button nz-button [nzType]="'primary'" (click)="showAddModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add
                 New</span></button>
     </div>
 </div>
@@ -78,25 +78,21 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- Add new Class Modal -->
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add new Class
+        <span *ngIf=" !isOnEdit && !isOnView">
+            Add Class
+        </span>
+        <span *ngIf="isOnEdit && !isOnView">
+            Update Class
+        </span>
+        <span *ngIf="isOnView">
+            View Details
+        </span>
+
     </ng-template>
     <ng-template #modalContent>
         <form autocomplete="off" [formGroup]="addclassForm">
@@ -106,7 +102,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
-                        <input matInput formControlName="classcode" type="text" placeholder="State Code">
+                        <input matInput formControlName="classcode" type="text" placeholder="Class Code">
                     </mat-form-field>
                 </div>
                 <div class="col-md-6">
@@ -116,8 +112,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <mat-form-field class="example-full-width">
                         <mat-label>Assign a Section</mat-label>
                         <mat-select formControlName="section">
@@ -126,8 +121,13 @@
                                 {{sec.SectionName}}</mat-option>
                         </mat-select>
                     </mat-form-field>
+
                 </div>
-                <div class="col-md-4"></div>
+                <div class="col-md-6 p-3">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                        Active
+                    </mat-slide-toggle>
+                </div>
             </div>
             <!-- </div> -->
             <!-- <div class="col-lg-12 col-md-12">

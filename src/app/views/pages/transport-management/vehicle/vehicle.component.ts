@@ -14,6 +14,7 @@ export class VehicleComponent implements OnInit {
   allVehicle;
   isVisible = false;
   isOnEdit = false;
+  isView: boolean = false;
   dataTable: any;
   addVehicleForm: FormGroup;
   flag = true;
@@ -26,8 +27,6 @@ export class VehicleComponent implements OnInit {
   }
   singleVehicle;
   constructor(private notification: NzNotificationService, private formBuilder: FormBuilder, private httpClient: HttpClient, private chRef: ChangeDetectorRef, private apiService: ApiServiceService) { }
-
-
   ngOnInit() {
     this.addVehicleForm = this.formBuilder.group({
       VehicleName: new FormControl(name, Validators.required),
@@ -37,7 +36,7 @@ export class VehicleComponent implements OnInit {
       DriverContactNo: new FormControl(name),
       DriverLicenceno: new FormControl(name, Validators.required),
       Description: new FormControl(name),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllInstitute();
   }
@@ -53,7 +52,9 @@ export class VehicleComponent implements OnInit {
   showModal(type) {
     this.isVisible = true;
     if (type == 'new') {
-      this, this.addVehicleForm.enable();
+      this.isOnEdit = false;
+      this.isView = false;
+      this.addVehicleForm.enable();
       this.addVehicleForm.reset();
       const formControl = this.addVehicleForm.get('Vehicleid');
       if (formControl) {
@@ -61,11 +62,13 @@ export class VehicleComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
-      this, this.addVehicleForm.enable();
+      this.isOnEdit = true;
+      this.isView = false;
+      this.addVehicleForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
       this.addVehicleForm.disable();
     }
   }
@@ -96,12 +99,9 @@ export class VehicleComponent implements OnInit {
         this.notification.create("error", "Failed", "Vehicle Adding Failed")
       })
     } else {
-
       console.log("Form Dta", this.addVehicleForm.value)
-
       this.apiService.vehicleService.updateVehicle(this.addVehicleForm.value).subscribe((res: any) => {
         this.addVehicleForm.removeControl('Vehicleid');
-
         this.getAllInstitute();
         this.isVisible = false;
         this.notification.create("success", "Success", "Vehicle Updated Successfully")
@@ -109,14 +109,10 @@ export class VehicleComponent implements OnInit {
         this.isVisible = false;
         this.notification.create("error", "Failed", "Vehicle Updating Failed")
       })
-
-
     }
-
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.Vehicleid = id;
@@ -129,7 +125,6 @@ export class VehicleComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.vehicleService.getVehicleById(id).subscribe((res: any) => {
       this.singleVehicle = res.Table[0];
@@ -141,15 +136,15 @@ export class VehicleComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.Vehicleid = id;
-    this.apiService.vehicleService.deleteVehicle(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllInstitute();
-      this.notification.create("success", "Success", "Vehicle Record Deleted Successfully")
-
-    }, (err) => {
-
-      this.notification.create("error", "Failed", "Vehicle Record Deletion Failed")
-    })
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.Vehicleid = id;
+      this.apiService.vehicleService.deleteVehicle(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllInstitute();
+        this.notification.create("success", "Success", "Vehicle Record Deleted Successfully")
+      }, (err) => {
+        this.notification.create("error", "Failed", "Vehicle Record Deletion Failed")
+      })
+    }
   }
 
 
@@ -205,15 +200,15 @@ export class VehicleComponent implements OnInit {
       ]
     });
 
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
-   // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
+    // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
     $('div.dt-buttons span').addClass('text');
 

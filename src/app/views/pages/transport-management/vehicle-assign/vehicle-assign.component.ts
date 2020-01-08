@@ -18,6 +18,7 @@ export class VehicleAssignComponent implements OnInit {
   allRoutes;
   isVisible = false;
   isOnEdit = false;
+  isView: boolean = false;
   dataTable: any;
   addasVehicleForm: FormGroup;
   flag = true;
@@ -36,7 +37,7 @@ export class VehicleAssignComponent implements OnInit {
     this.addasVehicleForm = this.formBuilder.group({
       RoutNo: new FormControl(name, Validators.required),
       VehicleNo: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllVehicle();
     this.getAllRoutes();
@@ -70,6 +71,7 @@ export class VehicleAssignComponent implements OnInit {
     this.isVisible = true;
     if (type == 'new') {
       this.isOnEdit = false;
+      this.isView = false;
       this, this.addasVehicleForm.enable();
       this.addasVehicleForm.reset();
       const formControl = this.addasVehicleForm.get('AssignVehicleID');
@@ -78,11 +80,13 @@ export class VehicleAssignComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
+      this.isOnEdit = true;
+      this.isView = false;
       this, this.addasVehicleForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
       this.addasVehicleForm.disable();
     }
   }
@@ -133,7 +137,6 @@ export class VehicleAssignComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.AssignVehicleID = id;
@@ -146,7 +149,6 @@ export class VehicleAssignComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.assignVehicleService.getAssignVehicleById(id).subscribe((res: any) => {
       this.singleAsVehicle = res.Table[0];
@@ -158,19 +160,18 @@ export class VehicleAssignComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.AssignVehicleID = id;
-    this.apiService.assignVehicleService.deleteAssignVehicle(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllassignVehicle();
-      this.notification.create("success", "Success", "Assign Vehicle Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.AssignVehicleID = id;
+      this.apiService.assignVehicleService.deleteAssignVehicle(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllassignVehicle();
+        this.notification.create("success", "Success", "Assign Vehicle Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "Assign Vehicle Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "Assign Vehicle Record Deletion Failed")
+      })
+    }
   }
-
-
-
 
 
   DataTablesFunctionCallAfterDataInit() {

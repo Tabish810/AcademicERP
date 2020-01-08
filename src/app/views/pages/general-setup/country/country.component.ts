@@ -33,7 +33,7 @@ export class CountryComponent implements OnInit {
     this.addCountryForm = this.formBuilder.group({
       CountryCode: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getallCountries();
   }
@@ -46,10 +46,13 @@ export class CountryComponent implements OnInit {
     })
   }
 
-
+  isView : boolean = false;
   showModal(type) {
     this.isVisible = true;
+    this.isOnEdit = false;
     if (type == 'new') {
+      this.isView = false;
+      this.isOnEdit = false;
       this, this.addCountryForm.enable();
       this.addCountryForm.reset();
       const formControl = this.addCountryForm.get('CountryID');
@@ -58,11 +61,13 @@ export class CountryComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
+      this.isOnEdit = true;
+      this.isView = false;
       this, this.addCountryForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
       this.addCountryForm.disable();
     }
   }
@@ -113,7 +118,6 @@ export class CountryComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.CountryID = id;
@@ -126,7 +130,6 @@ export class CountryComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.countryService.getCountryById(id).subscribe((res: any) => {
       this.singleState = res.Table[0];
@@ -138,15 +141,17 @@ export class CountryComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.CountryID = id;
-    this.apiService.countryService.deleteCountry(this.DeleteRecord).subscribe((res: any) => {
-      this.getallCountries();
-      this.notification.create("success", "Success", "State Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.CountryID = id;
+      this.apiService.countryService.deleteCountry(this.DeleteRecord).subscribe((res: any) => {
+        this.getallCountries();
+        this.notification.create("success", "Success", "State Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "State Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "State Record Deletion Failed")
+      })
+    }
   }
 
 
@@ -215,10 +220,10 @@ export class CountryComponent implements OnInit {
     $('div.dt-buttons span').addClass('text');
 
     // Buttons
-    $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right","10px");
-    $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right","10px");;
-    $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right","10px");;
-    $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right","10px");;
+    $('div.dt-buttons button:nth-child(1)').addClass('button-ops-group').css("margin-right", "10px");
+    $('div.dt-buttons button:nth-child(2)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(3)').addClass('button-ops-group').css("margin-right", "10px");;
+    $('div.dt-buttons button:nth-child(4)').addClass('button-ops-group').css("margin-right", "10px");;
 
 
 

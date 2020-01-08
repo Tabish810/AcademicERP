@@ -34,13 +34,12 @@
         <tbody class="FontSizeTable">
             <tr class="odd" role="row" *ngFor="let inst of allInstitutes; let i = index;">
                 <td>{{i + 1}}</td>
-                <td>{{inst.InstituteNo}}</td>
+                <td>{{inst.InstituteCode}}</td>
                 <td>{{inst.InstituteName}}</td>
                 <td>{{inst.RegistrationNo}}</td>
                 <td>{{inst.FaxNo}}</td>
                 <td>{{inst.ContactNo2}}</td>
                 <td>{{inst.CityNo}}</td>
-
                 <th>
                     <ng-container matColumnDef="actions">
                         <mat-cell>
@@ -82,10 +81,19 @@
 <!-- Add new Institute -->
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
     (nzOnCancel)="handleCancel()">
-
+    <!-- <span > -->
     <ng-template #modalTitle>
-        Add new Institute
+        <span *ngIf="!isOnEdit && !isView">
+            Add Institute
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Institute
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
+    <!-- </span> -->
     <ng-template #modalContent>
         <form [formGroup]="addInstituteForm">
             <!-- <mat-select [(value)]="selected"></mat-select> -->
@@ -180,6 +188,13 @@
                     <mat-form-field class="example-full-width">
                         <textarea matInput formControlName="Address" placeholder="Address"></textarea>
                     </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                        Active
+                    </mat-slide-toggle>
                 </div>
             </div>
         </form>

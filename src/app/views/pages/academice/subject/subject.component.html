@@ -4,7 +4,7 @@
     </div>
 
     <div class="col-md-6 text-right">
-        <button nz-button [nzType]="'primary'" (click)="showModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+        <button nz-button [nzType]="'primary'" (click)="showAddModal()"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add
                 New</span></button>
     </div>
 
@@ -93,37 +93,45 @@
         (nzOnCancel)="handleCancel()">
 
         <ng-template #modalTitle>
-            Add new Subject
+            <span *ngIf=" !isOnEdit && !isOnView">
+                Add Subject
+            </span>
+            <span *ngIf="isOnEdit && !isOnView">
+                Update Subject
+            </span>
+            <span *ngIf="isOnView">
+                View Details
+            </span>
         </ng-template>
         <ng-template #modalContent>
             <form autocomplete="off" [formGroup]="addSubjectForm">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <mat-form-field class="example-full-width">
-                            <input formControlName="subjectcode" type="number" tooltip="eg 676" matInput
+                            <input formControlName="SubjectCode" type="text" tooltip="eg 676" matInput
                                 placeholder="Subject Code"
-                                [ngClass]="{ 'is-invalid': submitted && f.subjectcode.errors }">
+                                [ngClass]="{ 'is-invalid': submitted && f.SubjectCode.errors }">
                         </mat-form-field>
-                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                            <div *ngIf="f.subjectcode.errors.required">Subject ID is required</div>
-                        </div>
+                        <!-- <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.SubjectCode.errors.required">Subject ID is required</div>
+                        </div> -->
                         <!-- <div class="form-group">
                             <label>Subject Code</label>
-                            <input class="form-control" formControlName="subjectcode" type="number" min="0"
-                                placeholder="eg: 676" [ngClass]="{ 'is-invalid': submitted && f.subjectcode.errors }">
+                            <input class="form-control" formControlName="SubjectCode" type="number" min="0"
+                                placeholder="eg: 676" [ngClass]="{ 'is-invalid': submitted && f.SubjectCode.errors }">
 
                             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                                <div *ngIf="f.subjectcode.errors.required">Subject ID is required</div>
+                                <div *ngIf="f.SubjectCode.errors.required">Subject ID is required</div>
                             </div>
                         </div> -->
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <mat-form-field class="example-full-width">
                             <input formControlName="name" matInput placeholder="Subject Name"
-                                [ngClass]="{ 'is-invalid': submitted && f.subjectcode.errors }">
+                                [ngClass]="{ 'is-invalid': submitted && f.SubjectCode.errors }">
                         </mat-form-field>
                         <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                            <div *ngIf="f.subjectcode.errors.required">Subject name is required</div>
+                            <div *ngIf="f.SubjectCode.errors.required">Subject name is required</div>
                         </div>
                         <!-- <div class="form-group">
                             <label>Subject Name</label>
@@ -142,13 +150,21 @@
                     <div class="col-md-6">
                         <mat-form-field class="example-full-width">
                             <mat-label>Assign Class</mat-label>
-                            <mat-select formControlName="CountrNo">
+                            <mat-select formControlName="class">
                                 <mat-option selected value="'null'">Select Classs</mat-option>
                                 <mat-option [value]="cl.ClassID" *ngFor="let cl of allClasses">
                                     {{cl.ClassName}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.class.errors.required">Class name is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-3">
+                        <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                            Active
+                        </mat-slide-toggle>
                     </div>
                     <!-- <div class="col-md-4">
                                 <label>Assign Class:</label>
@@ -161,9 +177,6 @@
                                 </select>
                             </div>
                         </div> -->
-                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                        <div *ngIf="f.class.errors.required">Class name is required</div>
-                    </div>
                 </div>
 
                 <!-- </div> -->
@@ -172,7 +185,7 @@
         <ng-template #modalFooter>
             <div class="col-lg-12 text-right">
                 <div class="btn-group mr-2">
-                    <button class="btn btn-success" [disabled] = "addSubjectForm.invalid" (click)="onSave()">
+                    <button class="btn btn-success" [disabled]="!addSubjectForm.valid" (click)="onSave()">
                         <i class="fa fa-save"></i>
                         <span class="text">Save</span>
                     </button>

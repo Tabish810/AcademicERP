@@ -23,6 +23,6 @@ export class InstituteService {
     return this.http.post('/api/MstInstitute/DeleteMstInstitute', id);
   }
   updateInstitute(data) {
-    return this.http.post('/api/MstInstituter/UpdateMstInstitute', data);
+    return this.http.post('/api/MstInstitute/UpdateMstInstitute', data);
   }
 }

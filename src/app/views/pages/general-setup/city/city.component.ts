@@ -13,6 +13,7 @@ declare const $: JQueryStatic;
 export class CityComponent implements OnInit {
   allStates;
   allCities;
+  isView : boolean = false;
   isVisible = false;
   isOnEdit = false;
   dataTable: any;
@@ -34,7 +35,7 @@ export class CityComponent implements OnInit {
       CityCode: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
       StateNo: new FormControl(name),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllStates();
     this.getAllCity();
@@ -54,11 +55,14 @@ export class CityComponent implements OnInit {
       this.DataTablesFunctionCallAfterDataInit();
     })
   }
-
   showModal(type) {
     this.isVisible = true;
+    this.isOnEdit = false;
+    this.isView = false;
     if (type == 'new') {
-      this, this.addCityForm.enable();
+      this.isView = false;
+      this.isOnEdit = false;
+       this.addCityForm.enable();
       this.addCityForm.reset();
       const formControl = this.addCityForm.get('CityID');
       if (formControl) {
@@ -66,11 +70,13 @@ export class CityComponent implements OnInit {
       }
     }
     if (type == 'edit') {
-
-      this, this.addCityForm.enable();
+      this.isOnEdit = true;
+      this.isView = false;
+       this.addCityForm.enable();
     }
     if (type == 'view') {
-
+      this.isOnEdit = false;
+      this.isView = true;
       this.addCityForm.disable();
     }
   }
@@ -90,6 +96,7 @@ export class CityComponent implements OnInit {
   }
   onSave() {
     if (!this.isOnEdit) {
+      console.log("added")
       this.apiService.cityService.createCity(this.addCityForm.value).subscribe((res: any) => {
         //this.addCityForm.removeControl('StudentNO');
         this.getAllCity();
@@ -121,7 +128,6 @@ export class CityComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.CityID = id;
@@ -134,7 +140,6 @@ export class CityComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.cityService.getCityById(id).subscribe((res: any) => {
       this.singleCity = res.Table[0];
@@ -146,20 +151,18 @@ export class CityComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.CityID = id;
-    this.apiService.cityService.deleteCity(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllCity();
-      this.notification.create("success", "Success", "City Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.CityID = id;
+      this.apiService.cityService.deleteCity(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllCity();
+        this.notification.create("success", "Success", "City Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "City Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "City Record Deletion Failed")
+      })
+    }
   }
-
-
-
-
 
   DataTablesFunctionCallAfterDataInit() {
     if (!this.flag) {

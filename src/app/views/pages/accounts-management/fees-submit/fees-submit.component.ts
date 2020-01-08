@@ -22,9 +22,11 @@ export class FeesSubmitComponent implements OnInit {
   DeleteRecord = {
     RowUID: null
   }
+  isView : boolean = false;
   UpdateRecord = {
     RowUID: null
   }
+  
   singleFeesSubmit;
 
 
@@ -40,7 +42,7 @@ export class FeesSubmitComponent implements OnInit {
       Date: new FormControl(name, Validators.required),
       LateFessAmount: new FormControl(0),
       AdditionalAmount: new FormControl(0),
-      IsActive: new FormControl(true),
+      IsActive: new FormControl(name),
       Description: new FormControl('')
     });
     this.getAllStduent();
@@ -76,7 +78,20 @@ export class FeesSubmitComponent implements OnInit {
   showModal(type) {
     this.isVisible = true;
     if (type == 'new') {
+      this.isView = false;
+      this.isOnEdit = false;
+      this.addFessForm.enable();
       this.addFessForm.reset();
+    }
+    if (type == 'edit') {
+      this.isOnEdit = true;
+      this.isView = false;
+     this.addFessForm.enable();
+    }
+    if (type == 'view') {
+      this.isOnEdit = false;
+      this.isView = true;
+      this.addFessForm.disable();
     }
 
   }
@@ -124,7 +139,6 @@ export class FeesSubmitComponent implements OnInit {
   editRecord(id) {
     this.UpdateRecord.RowUID = id;
     console.log("ROW UID", id)
-
     this.apiService.feesSubmitService.getFeesSubmitById(id).subscribe((res: any) => {
       this.singleFeesSubmit = res.Table[0];
       console.log("Single fees submit", this.singleFeesSubmit);
@@ -141,21 +155,22 @@ export class FeesSubmitComponent implements OnInit {
       this.addFessForm.enable();
     })
     this.showModal('edit');
-
   }
 
 
 
   deleteRecord(id) {
-    this.DeleteRecord.RowUID = id;
-    this.apiService.feesSubmitService.deleteFeesSubmit(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllFeesSubmit();
-      this.notification.create("success", "Success", "Fess Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.RowUID = id;
+      this.apiService.feesSubmitService.deleteFeesSubmit(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllFeesSubmit();
+        this.notification.create("success", "Success", "Fess Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "Fess Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "Fess Record Deletion Failed")
+      })
+    }
   }
   ViewRecord(id) {
     console.log("ROW UID", id)
@@ -224,15 +239,15 @@ export class FeesSubmitComponent implements OnInit {
         }
       ]
     });
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
-   // tslint:disable-next-line:max-line-length
-   $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
-   // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(1)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-warning').append('&nbsp;&nbsp;<i class="fa fa-table"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(2)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-success').append('&nbsp;&nbsp;<i class="fa fa-columns"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(3)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-info').append('&nbsp;&nbsp;<i class="fa fa-file"> </i>');
+    // tslint:disable-next-line:max-line-length
+    $('div.dt-buttons button:nth-child(4)').removeClass('dt-button buttons-copy buttons-html5').addClass('btn btn-outline-danger').append('&nbsp;&nbsp;<i class="fa fa-print"> </i>');
+    // $('div.dt-buttons button:nth-child(5)').removeClass('dt-button buttons-copy buttons-html5')
     //   .addClass('btn btn-outline-danger').append('<i class="fa fa-save"> </>');
     $('div.dt-buttons span').addClass('text');
 

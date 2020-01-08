@@ -15,6 +15,7 @@ export class SectionComponent implements OnInit {
   isVisible = false;
   addSectionForm: FormGroup;
   allSection;
+  isOnView = false;
   isOnEdit = false;
   dataTable: any;
   flag = true;
@@ -22,13 +23,15 @@ export class SectionComponent implements OnInit {
   submitted = false;
   section = {
     SectionName: null,
-    SectionCode: null
+    SectionCode: null,
+    IsActive: true
   }
 
   updateSection = {
     SectionName: null,
     SectionCode: null,
-    SectionID: null
+    SectionID: null,
+    IsActive: true
   }
 
   DeleteSection = {
@@ -43,7 +46,8 @@ export class SectionComponent implements OnInit {
   ngOnInit() {
     this.addSectionForm = this.formBuilder.group({
       name: new FormControl(name, Validators.required),
-      sectionId: new FormControl(name, [Validators.required, Validators.minLength(4)])
+      sectionId: new FormControl(name, [Validators.required]),
+      IsActive: new FormControl(name)
     });
     this.getAllSection();
   }
@@ -52,54 +56,63 @@ export class SectionComponent implements OnInit {
 
   //View Section
   ViewRecord(id) {
+    this.isOnView = false;
+    this.isOnEdit = false;
     this.showModal();
     let c;
+    this.isOnView = true;
     c = this.allSection.filter(x => x.SectionID == id);
     console.log("Seleted row data ", c);
     if (c != undefined || c != null) {
       console.log("Field 1", c[0].SectionID)
       console.log("Field 1", c[0].SectionCode)
       console.log("Field 1", c[0].SectionName)
-      this.addSectionForm.setValue({ name: c[0].SectionName, sectionId: c[0].SectionCode })
+      this.addSectionForm.setValue({ name: c[0].SectionName, sectionId: c[0].SectionCode, IsActive: c[0].IsActive })
       this.addSectionForm.disable();
     }
   }
 
-
-
-
+  showAddModal(){
+    this.isOnView = false;
+    this.isOnEdit = false;
+    this.showModal();
+  }
   //Delete Section
   deleteRecord(id) {
     console.log("Section id to delete", id)
+    if (confirm("Are you sure ?")) {
+      this.DeleteSection.SectionID = id;
+      if (id != null || id != undefined) {
 
-    this.DeleteSection.SectionID = id;
-    if (id != null || id != undefined) {
+        this.apiService.sectionService.deleteSection(this.DeleteSection).subscribe((res: any) => {
+          this.getAllSection();
+          this.notification.create("success", "Deleted", "Section Deleted Successfully");
 
-      this.apiService.sectionService.deleteSection(this.DeleteSection).subscribe((res: any) => {
-        this.getAllSection();
-        this.notification.create("success", "Deleted", "Section Deleted Successfully");
+        }, (err) => {
+          this.notification.create("error", "Failed", "Section Deleting Failed")
 
-      }, (err) => {
-        this.notification.create("error", "Failed", "Section Deleting Failed")
-
-      })
+        })
+      }
     }
+
   }
 
   //Update Section
   editRecord(id) {
     this.addSectionForm.enable();
+    this.isOnView = false;
     this.isOnEdit = true;
     this.showModal();
     let c;
     c = this.allSection.filter(x => x.SectionID == id);
     console.log("Seleted row data ", c);
     if (c != undefined || c != null) {
-      console.log("Field 1", c[0].SectionCode)
-      console.log("Field 1", c[0].SectionName)
-      console.log("Field 1", c[0].SectionID)
+      console.log("Field", c[0].SectionCode)
+      console.log("Field", c[0].SectionName)
+      console.log("Field", c[0].SectionID)
+      console.log("Field", c[0].IsActive)
       this.SectionID = c[0].SectionID;
-      this.addSectionForm.setValue({ name: c[0].SectionName, sectionId: c[0].SectionCode })
+      this.addSectionForm.setValue({ name: c[0].SectionName, sectionId: c[0].SectionCode, IsActive: c[0].IsActive })
     }
   }
 
@@ -111,6 +124,7 @@ export class SectionComponent implements OnInit {
     } else {
       this.section.SectionCode = this.addSectionForm.get('sectionId').value;
       this.section.SectionName = this.addSectionForm.get('name').value;
+      this.section.IsActive = this.addSectionForm.get('IsActive').value;
       console.log("Form data", this.addSectionForm.value);
       if (!this.isOnEdit) {
         this.apiService.sectionService.createSection(this.section).subscribe((res: any) => {
@@ -131,6 +145,7 @@ export class SectionComponent implements OnInit {
         this.updateSection.SectionCode = this.addSectionForm.get('sectionId').value;
         this.updateSection.SectionName = this.addSectionForm.get('name').value;
         this.updateSection.SectionID = this.SectionID;
+        this.updateSection.IsActive = this.addSectionForm.get('IsActive').value;
         this.apiService.sectionService.updateSection(this.updateSection).subscribe((res: any) => {
           this.isVisible = false;
           this.addSectionForm.reset();

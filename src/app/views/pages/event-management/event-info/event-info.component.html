@@ -31,7 +31,7 @@
         <tbody class="FontSizeTable">
             <tr class="odd" role="row" *ngFor="let event of allEvents; let i = index;">
                 <td>{{i + 1}}</td>
-                <td>{{event.EventNo}}</td>
+                <td>{{event.EventCode}}</td>
                 <td>{{event.Name}}</td>
                 <td>{{event.Description}}</td>
                 <th>
@@ -69,7 +69,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add new Event
+        <span *ngIf="!isOnEdit && !isView">
+            Add Event
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Event
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addEventForm">
@@ -91,6 +99,13 @@
                     <mat-form-field class="example-full-width">
                         <textarea matInput formControlName="Description" placeholder="Event Description"></textarea>
                     </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                        Active
+                    </mat-slide-toggle>
                 </div>
             </div>
         </form>

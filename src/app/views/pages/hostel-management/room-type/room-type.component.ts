@@ -15,6 +15,7 @@ export class RoomTypeComponent implements OnInit {
   allRoomType;
   isVisible = false;
   isOnEdit = false;
+  isView: boolean = false;
   dataTable: any;
   addRoomTypeForm: FormGroup;
   flag = true;
@@ -33,7 +34,7 @@ export class RoomTypeComponent implements OnInit {
     this.addRoomTypeForm = this.formBuilder.group({
       RommTypeCode: new FormControl(name, Validators.required),
       Name: new FormControl(name, Validators.required),
-      IsActive: new FormControl(true)
+      IsActive: new FormControl(name)
     });
     this.getAllRoomType();
   }
@@ -48,10 +49,10 @@ export class RoomTypeComponent implements OnInit {
 
   showModal(type) {
     this.isVisible = true;
-    this.isOnEdit = false;
     if (type == 'new') {
       this.isOnEdit = false;
-      this, this.addRoomTypeForm.enable();
+      this.isView = false;
+      this.addRoomTypeForm.enable();
       this.addRoomTypeForm.reset();
       const formControl = this.addRoomTypeForm.get('RoomTypeID');
       if (formControl) {
@@ -60,10 +61,12 @@ export class RoomTypeComponent implements OnInit {
     }
     if (type == 'edit') {
       this.isOnEdit = true;
-      this, this.addRoomTypeForm.enable();
+      this.isView = false;
+      this.addRoomTypeForm.enable();
     }
     if (type == 'view') {
       this.isOnEdit = false;
+      this.isView = true;
       this.addRoomTypeForm.disable();
     }
   }
@@ -114,7 +117,6 @@ export class RoomTypeComponent implements OnInit {
   }
 
   editRecord(id) {
-    this.isOnEdit = true;
     this.showModal('edit');
     console.log("Edit ID", id);
     this.UpdateRecord.RoomTypeID = id;
@@ -127,7 +129,6 @@ export class RoomTypeComponent implements OnInit {
   }
 
   viewRecord(id) {
-    this.isOnEdit = false;
     console.log("view ID", id);
     this.apiService.roomTypeService.getRoomTypeById(id).subscribe((res: any) => {
       this.singleRoomType = res.Table[0];
@@ -139,15 +140,17 @@ export class RoomTypeComponent implements OnInit {
   }
   deleteRecord(id) {
     console.log("Delete ID", id);
-    this.DeleteRecord.RoomTypeID = id;
-    this.apiService.roomTypeService.deleteRoomType(this.DeleteRecord).subscribe((res: any) => {
-      this.getAllRoomType();
-      this.notification.create("success", "Success", "Room Type Record Deleted Successfully")
+    if (confirm("Are you sure ?")) {
+      this.DeleteRecord.RoomTypeID = id;
+      this.apiService.roomTypeService.deleteRoomType(this.DeleteRecord).subscribe((res: any) => {
+        this.getAllRoomType();
+        this.notification.create("success", "Success", "Room Type Record Deleted Successfully")
 
-    }, (err) => {
+      }, (err) => {
 
-      this.notification.create("error", "Failed", "Room Type Record Deletion Failed")
-    })
+        this.notification.create("error", "Failed", "Room Type Record Deletion Failed")
+      })
+    }
   }
 
 

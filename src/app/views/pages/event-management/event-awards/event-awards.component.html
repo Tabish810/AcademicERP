@@ -21,8 +21,8 @@
         <thead>
             <tr>
                 <th>S# </th>
-                <th>Award Name</th>
                 <th>Award Code</th>
+                <th>Award Name</th>
                 <th>Action</th>
                 <!-- <th class="not-export-col">Actions</th> -->
             </tr>
@@ -30,8 +30,8 @@
         <tbody class="FontSizeTable">
             <tr class="odd" role="row" *ngFor="let award of allAwards; let i = index;">
                 <td>{{i + 1}}</td>
+                <td>{{award.AwardCode}}</td>
                 <td>{{award.Name}}</td>
-                <td>{{award.AwardNo}}</td>
                 <th>
                     <ng-container matColumnDef="actions">
                         <mat-cell>
@@ -66,7 +66,15 @@
     (nzOnCancel)="handleCancel()">
 
     <ng-template #modalTitle>
-        Add new Award
+        <span *ngIf="!isOnEdit && !isView">
+            Add Award
+        </span>
+        <span *ngIf="isOnEdit && !isView">
+            Update Award
+        </span>
+        <span *ngIf="isView">
+            View Details
+        </span>
     </ng-template>
     <ng-template #modalContent>
         <form [formGroup]="addAwardForm">
@@ -80,6 +88,13 @@
                     <mat-form-field class="example-full-width">
                         <input matInput formControlName="Name" type="text" placeholder="Award Name">
                     </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-slide-toggle class="example-margin" formControlName="IsActive" color="primary">
+                        Active
+                    </mat-slide-toggle>
                 </div>
             </div>
             <!-- <mat-select [(value)]="selected"></mat-select> -->
