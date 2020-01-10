@@ -1,0 +1,13 @@
+.add-btn,.delete-btn {
+    color           : white;
+    border          : 0px
+}
+.add-btn{
+    background-color: green;
+}
+.delete-btn{
+    background-color: red;
+}
+button:disabled{
+    cursor: pointer;
+}

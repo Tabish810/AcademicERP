@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <h1>Advance Marksheet Search</h1>
+    </div>
+
+    <div class="col-md-6 text-right">
+        <button nz-button [nzType]="'primary'"><span><i class="fa fa-search"></i>&nbsp;&nbsp;Search</span></button>
+    </div>
+</div>
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Institute</mat-label>
+                    <mat-select>
+                        <mat-option value="">
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <input matInput type="number" placeholder="Registration Number">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <input matInput type="number" placeholder="Exam Year">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Exam</mat-label>
+                    <mat-select >
+                        <mat-option selected disabled>Select Exam</mat-option>
+                        <!-- <mat-option [value]="cls.ClassCode" *ngFor="let cls of allExams">
+                            {{cls.ClassName}}
+                        </mat-option> -->
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Class</mat-label>
+                    <mat-select >
+                        <mat-option selected disabled>Select Class</mat-option>
+                        <mat-option [value]="cls.ClassCode" *ngFor="let cls of allClasses">
+                            {{cls.ClassName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Section</mat-label>
+                    <mat-select>
+                        <mat-option selected disabled>
+                            Select Section
+                        </mat-option>
+                        <mat-option [value]="sec.SectionCode" *ngFor="let sec of allSections">
+                            {{sec.SectionName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <input matInput type="number" placeholder="Roll No">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Name</mat-label>
+                    <mat-select>
+                        <mat-option value="">
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Select Father Name</mat-label>
+                    <mat-select>
+                        <mat-option value="">
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="table-responsive tab-pane active" role="tabpanel" id="home" style="overflow: auto; padding-top: 2px;">
+    <table id="example" id="example" class="table table-hover dataTable dtr-inline">
+        <thead>
+            <tr>
+                <th>S# </th>
+                <th>Subjects</th>
+                <th>Total Marks</th>
+                <th>Passing Marks</th>
+                <th>Obtain Marks</th>
+                <th>Grade</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody class="FontSizeTable">
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

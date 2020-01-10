@@ -119,10 +119,10 @@ export class InstitutesComponent implements OnInit {
         this.addInstituteForm.removeControl('InstitueID');
         this.getAllInstitute();
         this.isVisible = false;
-        this.notification.create("success", "Success", "Exam Updated Successfully")
+        this.notification.create("success", "Success", "Institute Updated Successfully")
       }, (err) => {
         this.isVisible = false;
-        this.notification.create("error", "Failed", "Exam Updating Failed")
+        this.notification.create("error", "Failed", "Institute Updating Failed")
       })
 
 
@@ -158,11 +158,11 @@ export class InstitutesComponent implements OnInit {
       this.DeleteRecord.InstitueID = id;
       this.apiService.instituteService.deleteInstitute(this.DeleteRecord).subscribe((res: any) => {
         this.getAllInstitute();
-        this.notification.create("success", "Success", "Exam Record Deleted Successfully")
+        this.notification.create("success", "Success", "Institue Record Deleted Successfully")
 
       }, (err) => {
 
-        this.notification.create("error", "Failed", "Exam Record Deletion Failed")
+        this.notification.create("error", "Failed", "Institue Record Deletion Failed")
       })
     }
 
@@ -186,21 +186,21 @@ export class InstitutesComponent implements OnInit {
       buttons: [
         {
           extend: 'excelHtml5',
-          title: 'Exam Report',
+          title: 'Institute Report',
           exportOptions: {
             columns: ':visible:not(.not-export-col)'
           }
         },
         {
           extend: 'csvHtml5',
-          title: 'Exam Report',
+          title: 'Institute Report',
           exportOptions: {
             columns: ':visible:not(.not-export-col)'
           }
         },
         {
           extend: 'pdfHtml5',
-          title: 'Exam Report',
+          title: 'Institute Report',
           exportOptions: {
             columns: ':visible:not(.not-export-col)'
           }
@@ -208,7 +208,7 @@ export class InstitutesComponent implements OnInit {
         ,
         {
           extend: 'print',
-          title: 'Exam Report',
+          title: 'Institute Report',
           exportOptions: {
             columns: [0, 1, 2]
           }
