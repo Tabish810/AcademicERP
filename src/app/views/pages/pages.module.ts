@@ -9,6 +9,7 @@ import { PartialsModule } from '../partials/partials.module';
 import { CoreModule } from '../../core/core.module';
 import { MailModule } from './apps/mail/mail.module';
 
+import { AdvanceSearchModule } from "./advance-search/advance-search.module";
 import { ECommerceModule } from './apps/e-commerce/e-commerce.module';
 import { UserManagementModule } from './user-management/user-management.module';
 import { MyPageComponent } from './my-page/my-page.component';
@@ -44,6 +45,7 @@ import { HomeWorkModule } from './home-work/home-work.module';
 		TransportManagementModule,
 		HRManagementModule,
 		EventManagementModule,
+		AdvanceSearchModule,
 		HostelManagementModule,
 		HomeWorkModule
 	],

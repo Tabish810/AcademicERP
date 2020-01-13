@@ -1179,15 +1179,16 @@ export class MenuConfig {
 					icon: 'flaticon-search',
 					submenu: [
 						{
-							title: 'Student Search',
-							page: '/advance_search/student'
-						}, {
-							title: 'Search2',
-							page: '/advance_search/teacher_search'
-						}, {
-							title: 'Search 3',
-							page: '/advance_search/any_search'
-						}
+							title: 'Marksheet Search',
+							page: '/advance_search/marksheet'
+						}, 
+						// {
+						// 	title: 'Search2',
+						// 	page: '/advance_search/teacher_search'
+						// }, {
+						// 	title: 'Search 3',
+						// 	page: '/advance_search/any_search'
+						// }
 					]
 				},
 				/*

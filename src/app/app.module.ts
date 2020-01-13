@@ -69,6 +69,7 @@ import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { HttpServiceService } from './services/common/http-service.service';
+// import { AdvanceSearchComponent } from './view/pages/advance-search/advance-search.component';
 
 // tslint:disable-next-line:class-name
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {

@@ -39,7 +39,7 @@ export class BookIssueComponent implements OnInit {
   ngOnInit() {
     this.addIssueBookForm = this.formBuilder.group({
       SubjectNo: new FormControl(name, Validators.required),
-      BookID: new FormControl(name, Validators.required),
+      BookNo: new FormControl(name, Validators.required),
       IssueTo: new FormControl(name),
       IssueDate: new FormControl(name, Validators.required),
       EpectedReturn: new FormControl(name),
@@ -96,6 +96,7 @@ export class BookIssueComponent implements OnInit {
   }
   onSave() {
     if (!this.isOnEdit) {
+      console.log(this.addIssueBookForm.value);
       this.apiService.bookIssueService.createIssueBook(this.addIssueBookForm.value).subscribe((res: any) => {
         //this.addIssueBookForm.removeControl('StudentNO');
         this.getAllIssueBooks();

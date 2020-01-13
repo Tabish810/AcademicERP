@@ -83,6 +83,10 @@ const routes: Routes = [
 				loadChildren: () => import('./views/pages/event-management/event-management.module').then(m => m.EventManagementModule)
 			},
 			{
+				path: 'advance_search',
+				loadChildren: () => import('./views/pages/advance-search/advance-search.module').then(m => m.AdvanceSearchModule)
+			},
+			{
 				path: 'hostel_management',
 				loadChildren: () => import('./views/pages/hostel-management/hostel-management.module').then(m => m.HostelManagementModule)
 			},
