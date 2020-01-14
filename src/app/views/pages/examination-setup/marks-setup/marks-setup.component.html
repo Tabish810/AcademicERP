@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="example-full-width">
-                    <input matInput type="number" [(ngModel)]="input.MarkSetupCode" name="Code" placeholder="Code">
+                    <input matInput  [(ngModel)]="input.MarkSetupCode" name="Code" placeholder="Code">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -54,7 +54,7 @@
                         <mat-option selected disabled>
                             Select Section
                         </mat-option>
-                        <mat-option [value]="sec.SectionCode" *ngFor="let sec of sections">
+                        <mat-option [value]="sec.SectionCode" *ngFor="let sec of allSection">
                             {{sec.SectionName}}
                         </mat-option>
                     </mat-select>
@@ -84,7 +84,7 @@
                 </mat-form-field>
             </div>
             <div class="col-md-6">
-              
+
             </div>
         </div>
     </form>
@@ -95,19 +95,11 @@
             <button class="add-btn">+</button>
         </div>
     </div> -->
-    <div class="row" *ngFor='let item of classSubjects;index as i'>
+    <div class="row" *ngFor='let item of Details;index as i'>
         <div class="col-md-2">
-            <mat-form-field class="example-full-width">
-                <mat-label>Select Subject</mat-label>
-                <mat-select [(ngModel)]="input.SubjectNo" name="SubjectNo">
-                    <mat-option selected disabled>
-                        Select Subject
-                    </mat-option>
-                    <mat-option [value]="sub.SubjectCode" *ngFor="let sub of classSubjects">
-                        {{sub.SubjectName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <!-- <mat-form-field class="example-full-width"> -->
+            <label class="p-4" style="font-size: 14px;color:black;font-weight: 500;">{{item.SubjectName}}</label>
+            <!-- </mat-form-field> -->
         </div>
         <div class="col-md-2">
             <mat-form-field class="example-full-width">
@@ -143,7 +135,7 @@
     <div class="row">
         <!-- <div class="col-md-4"></div> -->
         <div class="col-md-1 offset-md-11">
-            <button class="btn btn-primary" (click)="onSave()">
+            <button class="btn btn-primary" [disabled]="checkAllSelected()" (click)="onSave()">
                 Save
             </button>
         </div>

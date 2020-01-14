@@ -13,7 +13,9 @@ export class ExamService {
   createExam(data) {
     return this.http.post('/api/MstExam/InsertMstExam', data);
   }
-
+  insertMarksheet(payload) {
+    return this.http.post('/api/MarkSheet/InsertMarkSheet', payload);
+  }
   getExamById(id) {
     return this.http.get('/api/MstExam/MstExamById?id=' + id);
   }

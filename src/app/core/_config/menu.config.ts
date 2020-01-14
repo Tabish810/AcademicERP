@@ -1127,6 +1127,18 @@ export class MenuConfig {
 						{
 							title: 'Hostels',
 							page: '/hostel_management/hostels'
+						},
+						{
+							title: 'Assign Hostel',
+							page: '/hostel_management/assign_hostel'
+						},
+						{
+							title: 'Manage Assign Hostel',
+							page: '/hostel_management/manage_assign_hostel'
+						},
+						{
+							title: 'Hostels',
+							page: '/hostel_management/hostels'
 						}, {
 							title: 'Room Type',
 							page: '/hostel_management/room_type'

@@ -28,6 +28,7 @@ import { EventAwardsService } from '../endpoints/event-awards.service';
 import { HostelService } from '../endpoints/hostel.service';
 import { RoomService } from '../endpoints/room.service';
 import { RoomTypeService } from '../endpoints/room-type.service';
+import { AssignHostelService } from '../endpoints/assign-hostel';
 
 
 
@@ -50,6 +51,7 @@ export class ApiServiceService {
   vehicleService: VehicleService = new VehicleService(this.http);
   routeService: RouteService = new RouteService(this.http);
   assignVehicleService: AssignVehicleService = new AssignVehicleService(this.http);
+  assignHouseService : AssignHostelService = new AssignHostelService(this.http);
   cityService: CityService = new CityService(this.http);
   stateService: StateService = new StateService(this.http);
   countryService: CountryService = new CountryService(this.http);
