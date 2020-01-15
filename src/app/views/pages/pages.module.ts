@@ -24,6 +24,8 @@ import { HRManagementModule } from './hr-management/hr-management.module';
 import { EventManagementModule } from './event-management/event-management.module';
 import { HostelManagementModule } from './hostel-management/hostel-management.module';
 import { HomeWorkModule } from './home-work/home-work.module';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+ 
 @NgModule({
 	declarations: [MyPageComponent],
 	exports: [],
@@ -31,6 +33,8 @@ import { HomeWorkModule } from './home-work/home-work.module';
 		CommonModule,
 		HttpClientModule,
 		FormsModule,
+		OwlDateTimeModule,
+		OwlNativeDateTimeModule,
 		CoreModule,
 		PartialsModule,
 		MailModule,
