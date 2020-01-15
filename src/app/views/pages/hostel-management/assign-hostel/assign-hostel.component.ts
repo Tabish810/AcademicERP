@@ -26,7 +26,7 @@ export class AssignHostelComponent implements OnInit {
   flag = true;
   assignHouse: FormGroup;
   submitted = false;
-  singleExamSchedule;
+  singleHostel;
   editflag = false;
   DeleteRecord = {
     ExamScheduleID: null
@@ -40,27 +40,29 @@ export class AssignHostelComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getData();
     this.getAllEmployees();
     let edit_id;
     edit_id = this.route.snapshot.queryParams.edit_id;
     let view_id;
     view_id = this.route.snapshot.queryParams.view_id;
-    if (edit_id != null || edit_id != undefined) {
+    console.log(edit_id);
+
+    if (edit_id) {
       this.editflag = true
     }
-    if (view_id != null || view_id != undefined) {
+    if (view_id) {
       this.editflag = false;
     }
     this.createFormControls()
 
-    if (edit_id != null || edit_id != undefined) {
+    if (edit_id) {
       this.editRecord(edit_id)
     }
 
-    if (view_id != null || view_id != undefined) {
+    if (view_id) {
       this.viewRecord(view_id)
     }
-    this.getData();
   }
   filteredEmp;
   allEmployees: any = [];
@@ -77,7 +79,7 @@ export class AssignHostelComponent implements OnInit {
       console.log("All Hostel", this.allHostels);
     })
   }
-  studentsByClass : any =[];
+  studentsByClass: any = [];
   // getStudentByClass() {
   //   this.studentsByClass = this.allStudent.filter(data => data.AddmitionIn == this.input.ClassNo);
   //   console.log(this.studentsByClass);
@@ -194,9 +196,9 @@ export class AssignHostelComponent implements OnInit {
     console.log(this.studentsByClass);
     console.log(this.allStudent);
     this.studentsByClass[id] = this.allStudent.filter(data => data.AddmitionIn == classNumber);
-    console.log("after filter",classNumber);
-    console.log("after filter",this.studentsByClass[id]);
-    console.log("after filter",this.allStudent);
+    console.log("after filter", classNumber);
+    console.log("after filter", this.studentsByClass[id]);
+    console.log("after filter", this.allStudent);
     //   console.log(this.studentsByClass);
     // console.log("DetailCOntrol[id]", DetailCOntrol[id]);
     // let sTime = DetailCOntrol[id].get('StartTime').value;
@@ -231,44 +233,45 @@ export class AssignHostelComponent implements OnInit {
 
   }
   editRecord(id) {
-    // this.isOnEdit = true;
-    // console.log("Edit ID", id);
-    // this.UpdateRecord.ExamScheduleID = id;
-    // this.apiService.examScheduleService.getExamScheduleById(id).subscribe((res: any) => {
-    //   this.singleExamSchedule = res;
-    //   console.log("Single Time Table Record in", this.singleExamSchedule)
-    //   for (let i = 0; i < res.Detail.length - 1; i++) {
-    //     console.log("Array of Detail", res.Detail[i]);
-    //     this.assignHouseArray.push(this.updateDetailGroup())
-    //   }
-    //   this.assignHouse.addControl('ExamScheduleID', new FormControl(id));
-    //   this.assignHouse.patchValue(this.singleExamSchedule)
-    // })
-    // this.assignHouse.enable();
-    // console.log("this.assignHouse in edit rrec", this.assignHouse.value);
+    this.isOnEdit = true;
+    console.log("Edit ID", id);
+    this.UpdateRecord.ExamScheduleID = id;
+    console.log("after filter", this.studentsByClass);
+    this.apiService.assignHouseService.getAssignHostelById(id).subscribe((res: any) => {
+      this.singleHostel = res;
+      console.log("Single Time Table Record in", this.singleHostel)
+      for (let i = 0; i < res.Detail.length - 1; i++) {
+        console.log("all details", res.Detail[i]);
+        this.assignHouseArray.push(this.updateDetailGroup())
+      }
+      this.assignHouse.addControl('AssignHouseID', new FormControl(id));
+      this.assignHouse.patchValue(this.singleHostel)
+    })
+    this.assignHouse.enable();
+    console.log("this.assignHouse in edit rrec", this.assignHouse.value);
 
   }
 
   viewRecord(id) {
-    // this.isOnEdit = false;
-    // this.assignHouse.disable();
-    // console.log("view ID", id);
-    // this.apiService.examScheduleService.getExamScheduleById(id).subscribe((res: any) => {
-    //   this.singleExamSchedule = res;
-    //   console.log("Single Time Table Record", this.singleExamSchedule)
-    //   this.assignHouse.addControl('ExamScheduleID', new FormControl(id));
-    //   for (let i = 0; i < res.Detail.length - 1; i++) {
-    //     console.log("Array of Detail", res.Detail[i]);
-    //     this.assignHouseArray.push(this.updateDetailGroup())
-    //   }
-    //   this.assignHouse.patchValue(this.singleExamSchedule)
-    // })
+    this.isOnEdit = false;
+    this.assignHouse.disable();
+    console.log("view ID", id);
+    this.apiService.assignHouseService.getAssignHostelById(id).subscribe((res: any) => {
+      this.singleHostel = res;
+      console.log("Single Time Table Record", this.singleHostel)
+      this.assignHouse.addControl('AssignHouseID', new FormControl(id));
+      for (let i = 0; i < res.Detail.length - 1; i++) {
+        console.log("Array of Detail", res.Detail[i]);
+        this.assignHouseArray.push(this.updateDetailGroup())
+      }
+      this.assignHouse.patchValue(this.singleHostel)
+    })
   }
 
   getData() {
+    this.getAllStudent();
     this.getAllClass();
     this.getAllRooms();
-    this.getAllStudent();
     this.getAllHostel();
   }
   getAllRooms() {

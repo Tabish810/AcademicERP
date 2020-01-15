@@ -14,7 +14,7 @@
             <mat-form-field class="example-full-width">
                 <mat-label>Select House</mat-label>
                 <mat-select formControlName="HouseNo">
-                    <mat-option [value]="hst.HouseNo" *ngFor="let hst of allHostels">
+                    <mat-option [value]="hst.HouseCode" *ngFor="let hst of allHostels">
                         {{hst.HouseName}}
                     </mat-option>
                 </mat-select>

@@ -15,7 +15,7 @@ export class AssignHostelService {
   }
 
   getAssignHostelById(id) {
-    return this.http.getid('/api/AssignHostel/AssignHostelById?id=' + id);
+    return this.http.getid('/api/AssignHouse/AssignHouseGetByID?id=' + id);
   }
   getAllAssignHostel() {
     return this.http.get('/api/AssignHouse/GetAssignHouse');

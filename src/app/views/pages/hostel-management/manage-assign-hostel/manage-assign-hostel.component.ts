@@ -68,14 +68,14 @@ export class ManageAssignHostelComponent implements OnInit {
     })
   }
   createRecord() {
-    this._route.navigate(['/hostel_management/assign_hostel/']);
+    this._route.navigate(['/hostel_management/assign_hostel']);
   }
 
   editRecord(id) {
-    this._route.navigate(['/exam_management/exam_schedule/'], { queryParams: { edit_id: id } });
+    this._route.navigate(['/hostel_management/assign_hostel'], { queryParams: { edit_id: id } });
   }
   viewRecord(id) {
-    this._route.navigate(['/exam_management/exam_schedule/'], { queryParams: { view_id: id } });
+    this._route.navigate(['/hostel_management/assign_hostel'], { queryParams: { view_id: id } });
   }
   showModal(type) {
     this.isVisible = true;
